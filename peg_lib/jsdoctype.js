@@ -311,7 +311,13 @@ function peg$parse(input, options) {
       peg$c56 = function(value) {
                             return {
                               type: NodeType.STRING_VALUE,
-                              string: value.replace(/\\"/g, '"')
+                              quoteStyle: 'double',
+                              string: value.replace(/(\\+)"/gu, (_, esc) => {
+                                      return esc.length % 2
+                                          ? esc.slice(1) + '"'
+                                          : _;
+                                  })
+                                  .replace(/\\\\/gu, '\\')
                             };
                           },
       peg$c57 = /^[^\\']/,
@@ -319,7 +325,13 @@ function peg$parse(input, options) {
       peg$c59 = function(value) {
                             return {
                               type: NodeType.STRING_VALUE,
-                              string: value.replace(/\\'/g, "'")
+                              quoteStyle: 'single',
+                              string: value.replace(/(\\+)'/gu, (_, esc) => {
+                                      return esc.length % 2
+                                          ? esc.slice(1) + "'"
+                                          : _;
+                                  })
+                                  .replace(/\\\\/gu, '\\')
                             };
                           },
       peg$c60 = function(value) {
