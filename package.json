@@ -52,7 +52,7 @@
     "clean": "rimraf ./peg_lib",
     "postclean": "mkdirp ./peg_lib",
     "prebuild": "npm-run-all clean",
-    "build": "pegjs --cache -o ./peg_lib/jsdoctype.js ./peg_src/jsdoctype.pegjs"
+    "build": "pegjs --coverage --cache -o ./peg_lib/jsdoctype.js ./peg_src/jsdoctype.pegjs"
   },
   "husky": {
     "hooks": {

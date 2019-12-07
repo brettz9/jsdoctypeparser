@@ -18,14 +18,14 @@ function peg$SyntaxError(message, expected, found, location) {
   this.found    = found;
   this.location = location;
   this.name     = "SyntaxError";
-
+  // istanbul ignore next
   if (typeof Error.captureStackTrace === "function") {
     Error.captureStackTrace(this, peg$SyntaxError);
   }
 }
 
 peg$subclass(peg$SyntaxError, Error);
-
+// istanbul ignore next
 peg$SyntaxError.buildMessage = function(expected, found) {
   var DESCRIBE_EXPECTATION_FNS = {
         literal: function(expectation) {
@@ -57,11 +57,11 @@ peg$SyntaxError.buildMessage = function(expected, found) {
           return expectation.description;
         }
       };
-
+  // istanbul ignore next
   function hex(ch) {
     return ch.charCodeAt(0).toString(16).toUpperCase();
   }
-
+  // istanbul ignore next
   function literalEscape(s) {
     return s
       .replace(/\\/g, '\\\\')
@@ -73,7 +73,7 @@ peg$SyntaxError.buildMessage = function(expected, found) {
       .replace(/[\x00-\x0F]/g,          function(ch) { return '\\x0' + hex(ch); })
       .replace(/[\x10-\x1F\x7F-\x9F]/g, function(ch) { return '\\x'  + hex(ch); });
   }
-
+  // istanbul ignore next
   function classEscape(s) {
     return s
       .replace(/\\/g, '\\\\')
@@ -134,7 +134,7 @@ peg$SyntaxError.buildMessage = function(expected, found) {
 };
 
 function peg$parse(input, options) {
-
+  // istanbul ignore next
   options = options !== void 0 ? options : {};
 
   var peg$FAILED = {},
@@ -747,7 +747,7 @@ function peg$parse(input, options) {
 
       peg$result;
 
-
+  // istanbul ignore next
   if ("startRule" in options) {
     if (!(options.startRule in peg$startRuleFunctions)) {
       throw new Error("Can't start parsing from rule \"" + options.startRule + "\".");
@@ -755,15 +755,15 @@ function peg$parse(input, options) {
 
     peg$startRuleFunction = peg$startRuleFunctions[options.startRule];
   }
-
+  // istanbul ignore next
   function text() {
     return input.substring(peg$savedPos, peg$currPos);
   }
-
+  // istanbul ignore next
   function location() {
     return peg$computeLocation(peg$savedPos, peg$currPos);
   }
-
+  // istanbul ignore next
   function expected(description, location) {
     location = location !== void 0 ? location : peg$computeLocation(peg$savedPos, peg$currPos)
 
@@ -773,7 +773,7 @@ function peg$parse(input, options) {
       location
     );
   }
-
+  // istanbul ignore next
   function error(message, location) {
     location = location !== void 0 ? location : peg$computeLocation(peg$savedPos, peg$currPos)
 
@@ -795,7 +795,7 @@ function peg$parse(input, options) {
   function peg$endExpectation() {
     return { type: "end" };
   }
-
+  // istanbul ignore next
   function peg$otherExpectation(description) {
     return { type: "other", description: description };
   }
@@ -861,7 +861,7 @@ function peg$parse(input, options) {
 
     peg$maxFailExpected.push(expected);
   }
-
+  // istanbul ignore next
   function peg$buildSimpleError(message, location) {
     return new peg$SyntaxError(message, null, null, location);
   }
@@ -880,7 +880,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 0,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -889,36 +889,52 @@ function peg$parse(input, options) {
 
     s0 = peg$currPos;
     s1 = peg$parse_();
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = peg$parseVariadicTypeExpr();
+      // istanbul ignore else
       if (s2 === peg$FAILED) {
         s2 = peg$parseUnionTypeExpr();
+        // istanbul ignore else
         if (s2 === peg$FAILED) {
           s2 = peg$parseUnaryUnionTypeExpr();
+          // istanbul ignore else
           if (s2 === peg$FAILED) {
             s2 = peg$parseArrayTypeExpr();
+            // istanbul ignore else
             if (s2 === peg$FAILED) {
               s2 = peg$parseGenericTypeExpr();
+              // istanbul ignore else
               if (s2 === peg$FAILED) {
                 s2 = peg$parseRecordTypeExpr();
+                // istanbul ignore else
                 if (s2 === peg$FAILED) {
                   s2 = peg$parseTupleTypeExpr();
+                  // istanbul ignore else
                   if (s2 === peg$FAILED) {
                     s2 = peg$parseArrowTypeExpr();
+                    // istanbul ignore else
                     if (s2 === peg$FAILED) {
                       s2 = peg$parseFunctionTypeExpr();
+                      // istanbul ignore else
                       if (s2 === peg$FAILED) {
                         s2 = peg$parseTypeQueryExpr();
+                        // istanbul ignore else
                         if (s2 === peg$FAILED) {
                           s2 = peg$parseKeyQueryExpr();
+                          // istanbul ignore else
                           if (s2 === peg$FAILED) {
                             s2 = peg$parseBroadNamepathExpr();
+                            // istanbul ignore else
                             if (s2 === peg$FAILED) {
                               s2 = peg$parseParenthesizedExpr();
+                              // istanbul ignore else
                               if (s2 === peg$FAILED) {
                                 s2 = peg$parseValueExpr();
+                                // istanbul ignore else
                                 if (s2 === peg$FAILED) {
                                   s2 = peg$parseAnyTypeExpr();
+                                  // istanbul ignore else
                                   if (s2 === peg$FAILED) {
                                     s2 = peg$parseUnknownTypeExpr();
                                   }
@@ -936,8 +952,10 @@ function peg$parse(input, options) {
           }
         }
       }
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
         s3 = peg$parse_();
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           peg$savedPos = s0;
           s1 = peg$c0(s2);
@@ -968,7 +986,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 1,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -976,6 +994,7 @@ function peg$parse(input, options) {
     }
 
     s0 = [];
+    // istanbul ignore else
     if (peg$c1.test(input.charAt(peg$currPos))) {
       s1 = input.charAt(peg$currPos);
       peg$currPos++;
@@ -984,8 +1003,10 @@ function peg$parse(input, options) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c2); }
     }
+    // istanbul ignore else
     if (s1 === peg$FAILED) {
       s1 = peg$currPos;
+      // istanbul ignore else
       if (peg$c3.test(input.charAt(peg$currPos))) {
         s2 = input.charAt(peg$currPos);
         peg$currPos++;
@@ -994,10 +1015,13 @@ function peg$parse(input, options) {
         s2 = peg$FAILED;
         if (peg$silentFails === 0) { peg$fail(peg$c4); }
       }
+      // istanbul ignore else
       if (s2 === peg$FAILED) {
         s2 = null;
       }
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
+        // istanbul ignore else
         if (peg$c5.test(input.charAt(peg$currPos))) {
           s3 = input.charAt(peg$currPos);
           peg$currPos++;
@@ -1006,6 +1030,7 @@ function peg$parse(input, options) {
           s3 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c6); }
         }
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           s2 = [s2, s3];
           s1 = s2;
@@ -1022,6 +1047,7 @@ function peg$parse(input, options) {
     }
     while (s1 !== peg$FAILED) {
       s0.push(s1);
+      // istanbul ignore else
       if (peg$c1.test(input.charAt(peg$currPos))) {
         s1 = input.charAt(peg$currPos);
         peg$currPos++;
@@ -1030,8 +1056,10 @@ function peg$parse(input, options) {
         s1 = peg$FAILED;
         if (peg$silentFails === 0) { peg$fail(peg$c2); }
       }
+      // istanbul ignore else
       if (s1 === peg$FAILED) {
         s1 = peg$currPos;
+        // istanbul ignore else
         if (peg$c3.test(input.charAt(peg$currPos))) {
           s2 = input.charAt(peg$currPos);
           peg$currPos++;
@@ -1040,10 +1068,13 @@ function peg$parse(input, options) {
           s2 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c4); }
         }
+        // istanbul ignore else
         if (s2 === peg$FAILED) {
           s2 = null;
         }
+        // istanbul ignore else
         if (s2 !== peg$FAILED) {
+          // istanbul ignore else
           if (peg$c5.test(input.charAt(peg$currPos))) {
             s3 = input.charAt(peg$currPos);
             peg$currPos++;
@@ -1052,6 +1083,7 @@ function peg$parse(input, options) {
             s3 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c6); }
           }
+          // istanbul ignore else
           if (s3 !== peg$FAILED) {
             s2 = [s2, s3];
             s1 = s2;
@@ -1078,7 +1110,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 2,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -1087,6 +1119,7 @@ function peg$parse(input, options) {
 
     s0 = peg$currPos;
     s1 = peg$currPos;
+    // istanbul ignore else
     if (peg$c7.test(input.charAt(peg$currPos))) {
       s2 = input.charAt(peg$currPos);
       peg$currPos++;
@@ -1095,8 +1128,10 @@ function peg$parse(input, options) {
       s2 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c8); }
     }
+    // istanbul ignore else
     if (s2 !== peg$FAILED) {
       s3 = [];
+      // istanbul ignore else
       if (peg$c9.test(input.charAt(peg$currPos))) {
         s4 = input.charAt(peg$currPos);
         peg$currPos++;
@@ -1107,6 +1142,7 @@ function peg$parse(input, options) {
       }
       while (s4 !== peg$FAILED) {
         s3.push(s4);
+        // istanbul ignore else
         if (peg$c9.test(input.charAt(peg$currPos))) {
           s4 = input.charAt(peg$currPos);
           peg$currPos++;
@@ -1116,6 +1152,7 @@ function peg$parse(input, options) {
           if (peg$silentFails === 0) { peg$fail(peg$c10); }
         }
       }
+      // istanbul ignore else
       if (s3 !== peg$FAILED) {
         s2 = [s2, s3];
         s1 = s2;
@@ -1129,6 +1166,7 @@ function peg$parse(input, options) {
       peg$currPos = s1;
       s1 = peg$FAILED;
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s0 = input.substring(s0, peg$currPos);
     }
@@ -1146,7 +1184,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 3,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -1155,21 +1193,28 @@ function peg$parse(input, options) {
 
     s0 = peg$currPos;
     s1 = peg$parseParenthesizedExpr();
+    // istanbul ignore else
     if (s1 === peg$FAILED) {
       s1 = peg$parseImportTypeExpr();
+      // istanbul ignore else
       if (s1 === peg$FAILED) {
         s1 = peg$parseTypeNameExprJsDocFlavored();
       }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = [];
       s3 = peg$currPos;
       s4 = peg$parse_();
+      // istanbul ignore else
       if (s4 !== peg$FAILED) {
         s5 = peg$parseInfixNamepathOperator();
+        // istanbul ignore else
         if (s5 !== peg$FAILED) {
           s6 = peg$parse_();
+          // istanbul ignore else
           if (s6 !== peg$FAILED) {
+            // istanbul ignore else
             if (input.substr(peg$currPos, 6) === peg$c11) {
               s7 = peg$c11;
               peg$currPos += 6;
@@ -1178,13 +1223,17 @@ function peg$parse(input, options) {
               s7 = peg$FAILED;
               if (peg$silentFails === 0) { peg$fail(peg$c12); }
             }
+            // istanbul ignore else
             if (s7 === peg$FAILED) {
               s7 = null;
             }
+            // istanbul ignore else
             if (s7 !== peg$FAILED) {
               s8 = peg$parse_();
+              // istanbul ignore else
               if (s8 !== peg$FAILED) {
                 s9 = peg$parseMemberName();
+                // istanbul ignore else
                 if (s9 !== peg$FAILED) {
                   s4 = [s4, s5, s6, s7, s8, s9];
                   s3 = s4;
@@ -1222,11 +1271,15 @@ function peg$parse(input, options) {
         s2.push(s3);
         s3 = peg$currPos;
         s4 = peg$parse_();
+        // istanbul ignore else
         if (s4 !== peg$FAILED) {
           s5 = peg$parseInfixNamepathOperator();
+          // istanbul ignore else
           if (s5 !== peg$FAILED) {
             s6 = peg$parse_();
+            // istanbul ignore else
             if (s6 !== peg$FAILED) {
+              // istanbul ignore else
               if (input.substr(peg$currPos, 6) === peg$c11) {
                 s7 = peg$c11;
                 peg$currPos += 6;
@@ -1235,13 +1288,17 @@ function peg$parse(input, options) {
                 s7 = peg$FAILED;
                 if (peg$silentFails === 0) { peg$fail(peg$c12); }
               }
+              // istanbul ignore else
               if (s7 === peg$FAILED) {
                 s7 = null;
               }
+              // istanbul ignore else
               if (s7 !== peg$FAILED) {
                 s8 = peg$parse_();
+                // istanbul ignore else
                 if (s8 !== peg$FAILED) {
                   s9 = peg$parseMemberName();
+                  // istanbul ignore else
                   if (s9 !== peg$FAILED) {
                     s4 = [s4, s5, s6, s7, s8, s9];
                     s3 = s4;
@@ -1276,6 +1333,7 @@ function peg$parse(input, options) {
           s3 = peg$FAILED;
         }
       }
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
         peg$savedPos = s0;
         s1 = peg$c13(s1, s2);
@@ -1301,7 +1359,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 4,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -1311,6 +1369,7 @@ function peg$parse(input, options) {
     s0 = peg$currPos;
     s1 = peg$currPos;
     s2 = peg$currPos;
+    // istanbul ignore else
     if (peg$c7.test(input.charAt(peg$currPos))) {
       s3 = input.charAt(peg$currPos);
       peg$currPos++;
@@ -1319,8 +1378,10 @@ function peg$parse(input, options) {
       s3 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c8); }
     }
+    // istanbul ignore else
     if (s3 !== peg$FAILED) {
       s4 = [];
+      // istanbul ignore else
       if (peg$c14.test(input.charAt(peg$currPos))) {
         s5 = input.charAt(peg$currPos);
         peg$currPos++;
@@ -1331,6 +1392,7 @@ function peg$parse(input, options) {
       }
       while (s5 !== peg$FAILED) {
         s4.push(s5);
+        // istanbul ignore else
         if (peg$c14.test(input.charAt(peg$currPos))) {
           s5 = input.charAt(peg$currPos);
           peg$currPos++;
@@ -1340,6 +1402,7 @@ function peg$parse(input, options) {
           if (peg$silentFails === 0) { peg$fail(peg$c15); }
         }
       }
+      // istanbul ignore else
       if (s4 !== peg$FAILED) {
         s3 = [s3, s4];
         s2 = s3;
@@ -1353,12 +1416,14 @@ function peg$parse(input, options) {
       peg$currPos = s2;
       s2 = peg$FAILED;
     }
+    // istanbul ignore else
     if (s2 !== peg$FAILED) {
       s1 = input.substring(s1, peg$currPos);
     }
     else {
       s1 = s2;
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       peg$savedPos = s0;
       s1 = peg$c16(s1);
@@ -1375,7 +1440,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 5,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -1383,6 +1448,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$currPos;
+    // istanbul ignore else
     if (input.charCodeAt(peg$currPos) === 39) {
       s1 = peg$c17;
       peg$currPos++;
@@ -1391,9 +1457,11 @@ function peg$parse(input, options) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c18); }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = peg$currPos;
       s3 = [];
+      // istanbul ignore else
       if (peg$c19.test(input.charAt(peg$currPos))) {
         s4 = input.charAt(peg$currPos);
         peg$currPos++;
@@ -1402,8 +1470,10 @@ function peg$parse(input, options) {
         s4 = peg$FAILED;
         if (peg$silentFails === 0) { peg$fail(peg$c20); }
       }
+      // istanbul ignore else
       if (s4 === peg$FAILED) {
         s4 = peg$currPos;
+        // istanbul ignore else
         if (input.charCodeAt(peg$currPos) === 92) {
           s5 = peg$c21;
           peg$currPos++;
@@ -1412,7 +1482,9 @@ function peg$parse(input, options) {
           s5 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c22); }
         }
+        // istanbul ignore else
         if (s5 !== peg$FAILED) {
+          // istanbul ignore else
           if (input.length > peg$currPos) {
             s6 = input.charAt(peg$currPos);
             peg$currPos++;
@@ -1421,6 +1493,7 @@ function peg$parse(input, options) {
             s6 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c23); }
           }
+          // istanbul ignore else
           if (s6 !== peg$FAILED) {
             s5 = [s5, s6];
             s4 = s5;
@@ -1437,6 +1510,7 @@ function peg$parse(input, options) {
       }
       while (s4 !== peg$FAILED) {
         s3.push(s4);
+        // istanbul ignore else
         if (peg$c19.test(input.charAt(peg$currPos))) {
           s4 = input.charAt(peg$currPos);
           peg$currPos++;
@@ -1445,8 +1519,10 @@ function peg$parse(input, options) {
           s4 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c20); }
         }
+        // istanbul ignore else
         if (s4 === peg$FAILED) {
           s4 = peg$currPos;
+          // istanbul ignore else
           if (input.charCodeAt(peg$currPos) === 92) {
             s5 = peg$c21;
             peg$currPos++;
@@ -1455,7 +1531,9 @@ function peg$parse(input, options) {
             s5 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c22); }
           }
+          // istanbul ignore else
           if (s5 !== peg$FAILED) {
+            // istanbul ignore else
             if (input.length > peg$currPos) {
               s6 = input.charAt(peg$currPos);
               peg$currPos++;
@@ -1464,6 +1542,7 @@ function peg$parse(input, options) {
               s6 = peg$FAILED;
               if (peg$silentFails === 0) { peg$fail(peg$c23); }
             }
+            // istanbul ignore else
             if (s6 !== peg$FAILED) {
               s5 = [s5, s6];
               s4 = s5;
@@ -1479,13 +1558,16 @@ function peg$parse(input, options) {
           }
         }
       }
+      // istanbul ignore else
       if (s3 !== peg$FAILED) {
         s2 = input.substring(s2, peg$currPos);
       }
       else {
         s2 = s3;
       }
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
+        // istanbul ignore else
         if (input.charCodeAt(peg$currPos) === 39) {
           s3 = peg$c17;
           peg$currPos++;
@@ -1494,6 +1576,7 @@ function peg$parse(input, options) {
           s3 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c18); }
         }
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           peg$savedPos = s0;
           s1 = peg$c24(s2);
@@ -1513,8 +1596,10 @@ function peg$parse(input, options) {
       peg$currPos = s0;
       s0 = peg$FAILED;
     }
+    // istanbul ignore else
     if (s0 === peg$FAILED) {
       s0 = peg$currPos;
+      // istanbul ignore else
       if (input.charCodeAt(peg$currPos) === 34) {
         s1 = peg$c25;
         peg$currPos++;
@@ -1523,9 +1608,11 @@ function peg$parse(input, options) {
         s1 = peg$FAILED;
         if (peg$silentFails === 0) { peg$fail(peg$c26); }
       }
+      // istanbul ignore else
       if (s1 !== peg$FAILED) {
         s2 = peg$currPos;
         s3 = [];
+        // istanbul ignore else
         if (peg$c27.test(input.charAt(peg$currPos))) {
           s4 = input.charAt(peg$currPos);
           peg$currPos++;
@@ -1534,8 +1621,10 @@ function peg$parse(input, options) {
           s4 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c28); }
         }
+        // istanbul ignore else
         if (s4 === peg$FAILED) {
           s4 = peg$currPos;
+          // istanbul ignore else
           if (input.charCodeAt(peg$currPos) === 92) {
             s5 = peg$c21;
             peg$currPos++;
@@ -1544,7 +1633,9 @@ function peg$parse(input, options) {
             s5 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c22); }
           }
+          // istanbul ignore else
           if (s5 !== peg$FAILED) {
+            // istanbul ignore else
             if (input.length > peg$currPos) {
               s6 = input.charAt(peg$currPos);
               peg$currPos++;
@@ -1553,6 +1644,7 @@ function peg$parse(input, options) {
               s6 = peg$FAILED;
               if (peg$silentFails === 0) { peg$fail(peg$c23); }
             }
+            // istanbul ignore else
             if (s6 !== peg$FAILED) {
               s5 = [s5, s6];
               s4 = s5;
@@ -1569,6 +1661,7 @@ function peg$parse(input, options) {
         }
         while (s4 !== peg$FAILED) {
           s3.push(s4);
+          // istanbul ignore else
           if (peg$c27.test(input.charAt(peg$currPos))) {
             s4 = input.charAt(peg$currPos);
             peg$currPos++;
@@ -1577,8 +1670,10 @@ function peg$parse(input, options) {
             s4 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c28); }
           }
+          // istanbul ignore else
           if (s4 === peg$FAILED) {
             s4 = peg$currPos;
+            // istanbul ignore else
             if (input.charCodeAt(peg$currPos) === 92) {
               s5 = peg$c21;
               peg$currPos++;
@@ -1587,7 +1682,9 @@ function peg$parse(input, options) {
               s5 = peg$FAILED;
               if (peg$silentFails === 0) { peg$fail(peg$c22); }
             }
+            // istanbul ignore else
             if (s5 !== peg$FAILED) {
+              // istanbul ignore else
               if (input.length > peg$currPos) {
                 s6 = input.charAt(peg$currPos);
                 peg$currPos++;
@@ -1596,6 +1693,7 @@ function peg$parse(input, options) {
                 s6 = peg$FAILED;
                 if (peg$silentFails === 0) { peg$fail(peg$c23); }
               }
+              // istanbul ignore else
               if (s6 !== peg$FAILED) {
                 s5 = [s5, s6];
                 s4 = s5;
@@ -1611,13 +1709,16 @@ function peg$parse(input, options) {
             }
           }
         }
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           s2 = input.substring(s2, peg$currPos);
         }
         else {
           s2 = s3;
         }
+        // istanbul ignore else
         if (s2 !== peg$FAILED) {
+          // istanbul ignore else
           if (input.charCodeAt(peg$currPos) === 34) {
             s3 = peg$c25;
             peg$currPos++;
@@ -1626,6 +1727,7 @@ function peg$parse(input, options) {
             s3 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c26); }
           }
+          // istanbul ignore else
           if (s3 !== peg$FAILED) {
             peg$savedPos = s0;
             s1 = peg$c29(s2);
@@ -1645,9 +1747,11 @@ function peg$parse(input, options) {
         peg$currPos = s0;
         s0 = peg$FAILED;
       }
+      // istanbul ignore else
       if (s0 === peg$FAILED) {
         s0 = peg$currPos;
         s1 = peg$parseJsIdentifier();
+        // istanbul ignore else
         if (s1 !== peg$FAILED) {
           peg$savedPos = s0;
           s1 = peg$c30(s1);
@@ -1666,7 +1770,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 6,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -1674,8 +1778,10 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$parseMemberTypeOperator();
+    // istanbul ignore else
     if (s0 === peg$FAILED) {
       s0 = peg$parseInstanceMemberTypeOperator();
+      // istanbul ignore else
       if (s0 === peg$FAILED) {
         s0 = peg$parseInnerMemberTypeOperator();
       }
@@ -1691,7 +1797,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 7,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -1700,11 +1806,14 @@ function peg$parse(input, options) {
 
     s0 = peg$currPos;
     s1 = peg$parseTypeNameExprJsDocFlavored();
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = [];
       s3 = peg$currPos;
       s4 = peg$parse_();
+      // istanbul ignore else
       if (s4 !== peg$FAILED) {
+        // istanbul ignore else
         if (input.charCodeAt(peg$currPos) === 46) {
           s5 = peg$c31;
           peg$currPos++;
@@ -1713,10 +1822,13 @@ function peg$parse(input, options) {
           s5 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c32); }
         }
+        // istanbul ignore else
         if (s5 !== peg$FAILED) {
           s6 = peg$parse_();
+          // istanbul ignore else
           if (s6 !== peg$FAILED) {
             s7 = peg$parseTypeNameExprJsDocFlavored();
+            // istanbul ignore else
             if (s7 !== peg$FAILED) {
               s4 = [s4, s5, s6, s7];
               s3 = s4;
@@ -1744,7 +1856,9 @@ function peg$parse(input, options) {
         s2.push(s3);
         s3 = peg$currPos;
         s4 = peg$parse_();
+        // istanbul ignore else
         if (s4 !== peg$FAILED) {
+          // istanbul ignore else
           if (input.charCodeAt(peg$currPos) === 46) {
             s5 = peg$c31;
             peg$currPos++;
@@ -1753,10 +1867,13 @@ function peg$parse(input, options) {
             s5 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c32); }
           }
+          // istanbul ignore else
           if (s5 !== peg$FAILED) {
             s6 = peg$parse_();
+            // istanbul ignore else
             if (s6 !== peg$FAILED) {
               s7 = peg$parseTypeNameExprJsDocFlavored();
+              // istanbul ignore else
               if (s7 !== peg$FAILED) {
                 s4 = [s4, s5, s6, s7];
                 s3 = s4;
@@ -1781,6 +1898,7 @@ function peg$parse(input, options) {
           s3 = peg$FAILED;
         }
       }
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
         peg$savedPos = s0;
         s1 = peg$c33(s1, s2);
@@ -1806,7 +1924,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 8,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -1814,6 +1932,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$currPos;
+    // istanbul ignore else
     if (input.charCodeAt(peg$currPos) === 46) {
       s1 = peg$c31;
       peg$currPos++;
@@ -1822,6 +1941,7 @@ function peg$parse(input, options) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c32); }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       peg$savedPos = s0;
       s1 = peg$c34();
@@ -1838,7 +1958,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 9,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -1846,6 +1966,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$currPos;
+    // istanbul ignore else
     if (input.charCodeAt(peg$currPos) === 126) {
       s1 = peg$c35;
       peg$currPos++;
@@ -1854,6 +1975,7 @@ function peg$parse(input, options) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c36); }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       peg$savedPos = s0;
       s1 = peg$c37();
@@ -1870,7 +1992,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 10,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -1878,6 +2000,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$currPos;
+    // istanbul ignore else
     if (input.charCodeAt(peg$currPos) === 35) {
       s1 = peg$c38;
       peg$currPos++;
@@ -1886,6 +2009,7 @@ function peg$parse(input, options) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c39); }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       peg$savedPos = s0;
       s1 = peg$c40();
@@ -1902,7 +2026,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 11,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -1910,8 +2034,10 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$parseExternalNameExpr();
+    // istanbul ignore else
     if (s0 === peg$FAILED) {
       s0 = peg$parseModuleNameExpr();
+      // istanbul ignore else
       if (s0 === peg$FAILED) {
         s0 = peg$parseNamepathExpr();
       }
@@ -1927,7 +2053,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 12,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -1935,6 +2061,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$currPos;
+    // istanbul ignore else
     if (input.substr(peg$currPos, 8) === peg$c41) {
       s1 = peg$c41;
       peg$currPos += 8;
@@ -1943,9 +2070,12 @@ function peg$parse(input, options) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c42); }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = peg$parse_();
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
+        // istanbul ignore else
         if (input.charCodeAt(peg$currPos) === 58) {
           s3 = peg$c43;
           peg$currPos++;
@@ -1954,19 +2084,26 @@ function peg$parse(input, options) {
           s3 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c44); }
         }
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           s4 = peg$parse_();
+          // istanbul ignore else
           if (s4 !== peg$FAILED) {
             s5 = peg$parseMemberName();
+            // istanbul ignore else
             if (s5 !== peg$FAILED) {
               s6 = [];
               s7 = peg$currPos;
               s8 = peg$parse_();
+              // istanbul ignore else
               if (s8 !== peg$FAILED) {
                 s9 = peg$parseInfixNamepathOperator();
+                // istanbul ignore else
                 if (s9 !== peg$FAILED) {
                   s10 = peg$parse_();
+                  // istanbul ignore else
                   if (s10 !== peg$FAILED) {
+                    // istanbul ignore else
                     if (input.substr(peg$currPos, 6) === peg$c11) {
                       s11 = peg$c11;
                       peg$currPos += 6;
@@ -1975,13 +2112,17 @@ function peg$parse(input, options) {
                       s11 = peg$FAILED;
                       if (peg$silentFails === 0) { peg$fail(peg$c12); }
                     }
+                    // istanbul ignore else
                     if (s11 === peg$FAILED) {
                       s11 = null;
                     }
+                    // istanbul ignore else
                     if (s11 !== peg$FAILED) {
                       s12 = peg$parse_();
+                      // istanbul ignore else
                       if (s12 !== peg$FAILED) {
                         s13 = peg$parseMemberName();
+                        // istanbul ignore else
                         if (s13 !== peg$FAILED) {
                           s8 = [s8, s9, s10, s11, s12, s13];
                           s7 = s8;
@@ -2019,11 +2160,15 @@ function peg$parse(input, options) {
                 s6.push(s7);
                 s7 = peg$currPos;
                 s8 = peg$parse_();
+                // istanbul ignore else
                 if (s8 !== peg$FAILED) {
                   s9 = peg$parseInfixNamepathOperator();
+                  // istanbul ignore else
                   if (s9 !== peg$FAILED) {
                     s10 = peg$parse_();
+                    // istanbul ignore else
                     if (s10 !== peg$FAILED) {
+                      // istanbul ignore else
                       if (input.substr(peg$currPos, 6) === peg$c11) {
                         s11 = peg$c11;
                         peg$currPos += 6;
@@ -2032,13 +2177,17 @@ function peg$parse(input, options) {
                         s11 = peg$FAILED;
                         if (peg$silentFails === 0) { peg$fail(peg$c12); }
                       }
+                      // istanbul ignore else
                       if (s11 === peg$FAILED) {
                         s11 = null;
                       }
+                      // istanbul ignore else
                       if (s11 !== peg$FAILED) {
                         s12 = peg$parse_();
+                        // istanbul ignore else
                         if (s12 !== peg$FAILED) {
                           s13 = peg$parseMemberName();
+                          // istanbul ignore else
                           if (s13 !== peg$FAILED) {
                             s8 = [s8, s9, s10, s11, s12, s13];
                             s7 = s8;
@@ -2073,6 +2222,7 @@ function peg$parse(input, options) {
                   s7 = peg$FAILED;
                 }
               }
+              // istanbul ignore else
               if (s6 !== peg$FAILED) {
                 peg$savedPos = s0;
                 s1 = peg$c45(s5, s6);
@@ -2118,7 +2268,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 13,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -2126,6 +2276,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$currPos;
+    // istanbul ignore else
     if (input.substr(peg$currPos, 6) === peg$c46) {
       s1 = peg$c46;
       peg$currPos += 6;
@@ -2134,9 +2285,12 @@ function peg$parse(input, options) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c47); }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = peg$parse_();
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
+        // istanbul ignore else
         if (input.charCodeAt(peg$currPos) === 58) {
           s3 = peg$c43;
           peg$currPos++;
@@ -2145,10 +2299,13 @@ function peg$parse(input, options) {
           s3 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c44); }
         }
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           s4 = peg$parse_();
+          // istanbul ignore else
           if (s4 !== peg$FAILED) {
             s5 = peg$parseModulePathExpr();
+            // istanbul ignore else
             if (s5 !== peg$FAILED) {
               peg$savedPos = s0;
               s1 = peg$c48(s5);
@@ -2189,7 +2346,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 14,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -2198,15 +2355,20 @@ function peg$parse(input, options) {
 
     s0 = peg$currPos;
     s1 = peg$parseFilePathExpr();
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = [];
       s3 = peg$currPos;
       s4 = peg$parse_();
+      // istanbul ignore else
       if (s4 !== peg$FAILED) {
         s5 = peg$parseInfixNamepathOperator();
+        // istanbul ignore else
         if (s5 !== peg$FAILED) {
           s6 = peg$parse_();
+          // istanbul ignore else
           if (s6 !== peg$FAILED) {
+            // istanbul ignore else
             if (input.substr(peg$currPos, 6) === peg$c11) {
               s7 = peg$c11;
               peg$currPos += 6;
@@ -2215,13 +2377,17 @@ function peg$parse(input, options) {
               s7 = peg$FAILED;
               if (peg$silentFails === 0) { peg$fail(peg$c12); }
             }
+            // istanbul ignore else
             if (s7 === peg$FAILED) {
               s7 = null;
             }
+            // istanbul ignore else
             if (s7 !== peg$FAILED) {
               s8 = peg$parse_();
+              // istanbul ignore else
               if (s8 !== peg$FAILED) {
                 s9 = peg$parseMemberName();
+                // istanbul ignore else
                 if (s9 !== peg$FAILED) {
                   s4 = [s4, s5, s6, s7, s8, s9];
                   s3 = s4;
@@ -2259,11 +2425,15 @@ function peg$parse(input, options) {
         s2.push(s3);
         s3 = peg$currPos;
         s4 = peg$parse_();
+        // istanbul ignore else
         if (s4 !== peg$FAILED) {
           s5 = peg$parseInfixNamepathOperator();
+          // istanbul ignore else
           if (s5 !== peg$FAILED) {
             s6 = peg$parse_();
+            // istanbul ignore else
             if (s6 !== peg$FAILED) {
+              // istanbul ignore else
               if (input.substr(peg$currPos, 6) === peg$c11) {
                 s7 = peg$c11;
                 peg$currPos += 6;
@@ -2272,13 +2442,17 @@ function peg$parse(input, options) {
                 s7 = peg$FAILED;
                 if (peg$silentFails === 0) { peg$fail(peg$c12); }
               }
+              // istanbul ignore else
               if (s7 === peg$FAILED) {
                 s7 = null;
               }
+              // istanbul ignore else
               if (s7 !== peg$FAILED) {
                 s8 = peg$parse_();
+                // istanbul ignore else
                 if (s8 !== peg$FAILED) {
                   s9 = peg$parseMemberName();
+                  // istanbul ignore else
                   if (s9 !== peg$FAILED) {
                     s4 = [s4, s5, s6, s7, s8, s9];
                     s3 = s4;
@@ -2313,6 +2487,7 @@ function peg$parse(input, options) {
           s3 = peg$FAILED;
         }
       }
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
         peg$savedPos = s0;
         s1 = peg$c49(s1, s2);
@@ -2338,7 +2513,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 15,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -2346,6 +2521,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$currPos;
+    // istanbul ignore else
     if (input.charCodeAt(peg$currPos) === 39) {
       s1 = peg$c17;
       peg$currPos++;
@@ -2354,9 +2530,11 @@ function peg$parse(input, options) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c18); }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = peg$currPos;
       s3 = [];
+      // istanbul ignore else
       if (peg$c19.test(input.charAt(peg$currPos))) {
         s4 = input.charAt(peg$currPos);
         peg$currPos++;
@@ -2365,8 +2543,10 @@ function peg$parse(input, options) {
         s4 = peg$FAILED;
         if (peg$silentFails === 0) { peg$fail(peg$c20); }
       }
+      // istanbul ignore else
       if (s4 === peg$FAILED) {
         s4 = peg$currPos;
+        // istanbul ignore else
         if (input.charCodeAt(peg$currPos) === 92) {
           s5 = peg$c21;
           peg$currPos++;
@@ -2375,7 +2555,9 @@ function peg$parse(input, options) {
           s5 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c22); }
         }
+        // istanbul ignore else
         if (s5 !== peg$FAILED) {
+          // istanbul ignore else
           if (input.length > peg$currPos) {
             s6 = input.charAt(peg$currPos);
             peg$currPos++;
@@ -2384,6 +2566,7 @@ function peg$parse(input, options) {
             s6 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c23); }
           }
+          // istanbul ignore else
           if (s6 !== peg$FAILED) {
             s5 = [s5, s6];
             s4 = s5;
@@ -2400,6 +2583,7 @@ function peg$parse(input, options) {
       }
       while (s4 !== peg$FAILED) {
         s3.push(s4);
+        // istanbul ignore else
         if (peg$c19.test(input.charAt(peg$currPos))) {
           s4 = input.charAt(peg$currPos);
           peg$currPos++;
@@ -2408,8 +2592,10 @@ function peg$parse(input, options) {
           s4 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c20); }
         }
+        // istanbul ignore else
         if (s4 === peg$FAILED) {
           s4 = peg$currPos;
+          // istanbul ignore else
           if (input.charCodeAt(peg$currPos) === 92) {
             s5 = peg$c21;
             peg$currPos++;
@@ -2418,7 +2604,9 @@ function peg$parse(input, options) {
             s5 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c22); }
           }
+          // istanbul ignore else
           if (s5 !== peg$FAILED) {
+            // istanbul ignore else
             if (input.length > peg$currPos) {
               s6 = input.charAt(peg$currPos);
               peg$currPos++;
@@ -2427,6 +2615,7 @@ function peg$parse(input, options) {
               s6 = peg$FAILED;
               if (peg$silentFails === 0) { peg$fail(peg$c23); }
             }
+            // istanbul ignore else
             if (s6 !== peg$FAILED) {
               s5 = [s5, s6];
               s4 = s5;
@@ -2442,13 +2631,16 @@ function peg$parse(input, options) {
           }
         }
       }
+      // istanbul ignore else
       if (s3 !== peg$FAILED) {
         s2 = input.substring(s2, peg$currPos);
       }
       else {
         s2 = s3;
       }
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
+        // istanbul ignore else
         if (input.charCodeAt(peg$currPos) === 39) {
           s3 = peg$c17;
           peg$currPos++;
@@ -2457,6 +2649,7 @@ function peg$parse(input, options) {
           s3 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c18); }
         }
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           peg$savedPos = s0;
           s1 = peg$c50(s2);
@@ -2476,8 +2669,10 @@ function peg$parse(input, options) {
       peg$currPos = s0;
       s0 = peg$FAILED;
     }
+    // istanbul ignore else
     if (s0 === peg$FAILED) {
       s0 = peg$currPos;
+      // istanbul ignore else
       if (input.charCodeAt(peg$currPos) === 34) {
         s1 = peg$c25;
         peg$currPos++;
@@ -2486,9 +2681,11 @@ function peg$parse(input, options) {
         s1 = peg$FAILED;
         if (peg$silentFails === 0) { peg$fail(peg$c26); }
       }
+      // istanbul ignore else
       if (s1 !== peg$FAILED) {
         s2 = peg$currPos;
         s3 = [];
+        // istanbul ignore else
         if (peg$c27.test(input.charAt(peg$currPos))) {
           s4 = input.charAt(peg$currPos);
           peg$currPos++;
@@ -2497,8 +2694,10 @@ function peg$parse(input, options) {
           s4 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c28); }
         }
+        // istanbul ignore else
         if (s4 === peg$FAILED) {
           s4 = peg$currPos;
+          // istanbul ignore else
           if (input.charCodeAt(peg$currPos) === 92) {
             s5 = peg$c21;
             peg$currPos++;
@@ -2507,7 +2706,9 @@ function peg$parse(input, options) {
             s5 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c22); }
           }
+          // istanbul ignore else
           if (s5 !== peg$FAILED) {
+            // istanbul ignore else
             if (input.length > peg$currPos) {
               s6 = input.charAt(peg$currPos);
               peg$currPos++;
@@ -2516,6 +2717,7 @@ function peg$parse(input, options) {
               s6 = peg$FAILED;
               if (peg$silentFails === 0) { peg$fail(peg$c23); }
             }
+            // istanbul ignore else
             if (s6 !== peg$FAILED) {
               s5 = [s5, s6];
               s4 = s5;
@@ -2532,6 +2734,7 @@ function peg$parse(input, options) {
         }
         while (s4 !== peg$FAILED) {
           s3.push(s4);
+          // istanbul ignore else
           if (peg$c27.test(input.charAt(peg$currPos))) {
             s4 = input.charAt(peg$currPos);
             peg$currPos++;
@@ -2540,8 +2743,10 @@ function peg$parse(input, options) {
             s4 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c28); }
           }
+          // istanbul ignore else
           if (s4 === peg$FAILED) {
             s4 = peg$currPos;
+            // istanbul ignore else
             if (input.charCodeAt(peg$currPos) === 92) {
               s5 = peg$c21;
               peg$currPos++;
@@ -2550,7 +2755,9 @@ function peg$parse(input, options) {
               s5 = peg$FAILED;
               if (peg$silentFails === 0) { peg$fail(peg$c22); }
             }
+            // istanbul ignore else
             if (s5 !== peg$FAILED) {
+              // istanbul ignore else
               if (input.length > peg$currPos) {
                 s6 = input.charAt(peg$currPos);
                 peg$currPos++;
@@ -2559,6 +2766,7 @@ function peg$parse(input, options) {
                 s6 = peg$FAILED;
                 if (peg$silentFails === 0) { peg$fail(peg$c23); }
               }
+              // istanbul ignore else
               if (s6 !== peg$FAILED) {
                 s5 = [s5, s6];
                 s4 = s5;
@@ -2574,13 +2782,16 @@ function peg$parse(input, options) {
             }
           }
         }
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           s2 = input.substring(s2, peg$currPos);
         }
         else {
           s2 = s3;
         }
+        // istanbul ignore else
         if (s2 !== peg$FAILED) {
+          // istanbul ignore else
           if (input.charCodeAt(peg$currPos) === 34) {
             s3 = peg$c25;
             peg$currPos++;
@@ -2589,6 +2800,7 @@ function peg$parse(input, options) {
             s3 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c26); }
           }
+          // istanbul ignore else
           if (s3 !== peg$FAILED) {
             peg$savedPos = s0;
             s1 = peg$c51(s2);
@@ -2608,10 +2820,12 @@ function peg$parse(input, options) {
         peg$currPos = s0;
         s0 = peg$FAILED;
       }
+      // istanbul ignore else
       if (s0 === peg$FAILED) {
         s0 = peg$currPos;
         s1 = peg$currPos;
         s2 = [];
+        // istanbul ignore else
         if (peg$c52.test(input.charAt(peg$currPos))) {
           s3 = input.charAt(peg$currPos);
           peg$currPos++;
@@ -2620,9 +2834,11 @@ function peg$parse(input, options) {
           s3 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c53); }
         }
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           while (s3 !== peg$FAILED) {
             s2.push(s3);
+            // istanbul ignore else
             if (peg$c52.test(input.charAt(peg$currPos))) {
               s3 = input.charAt(peg$currPos);
               peg$currPos++;
@@ -2636,12 +2852,14 @@ function peg$parse(input, options) {
         else {
           s2 = peg$FAILED;
         }
+        // istanbul ignore else
         if (s2 !== peg$FAILED) {
           s1 = input.substring(s1, peg$currPos);
         }
         else {
           s1 = s2;
         }
+        // istanbul ignore else
         if (s1 !== peg$FAILED) {
           peg$savedPos = s0;
           s1 = peg$c54(s1);
@@ -2660,7 +2878,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 16,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -2668,6 +2886,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$currPos;
+    // istanbul ignore else
     if (input.charCodeAt(peg$currPos) === 42) {
       s1 = peg$c55;
       peg$currPos++;
@@ -2676,6 +2895,7 @@ function peg$parse(input, options) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c56); }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       peg$savedPos = s0;
       s1 = peg$c57();
@@ -2692,7 +2912,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 17,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -2700,6 +2920,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$currPos;
+    // istanbul ignore else
     if (input.charCodeAt(peg$currPos) === 63) {
       s1 = peg$c58;
       peg$currPos++;
@@ -2708,6 +2929,7 @@ function peg$parse(input, options) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c59); }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       peg$savedPos = s0;
       s1 = peg$c60();
@@ -2724,7 +2946,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 18,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -2732,6 +2954,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$parseStringLiteralExpr();
+    // istanbul ignore else
     if (s0 === peg$FAILED) {
       s0 = peg$parseNumberLiteralExpr();
     }
@@ -2746,7 +2969,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 19,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -2754,6 +2977,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$currPos;
+    // istanbul ignore else
     if (input.charCodeAt(peg$currPos) === 34) {
       s1 = peg$c25;
       peg$currPos++;
@@ -2762,9 +2986,11 @@ function peg$parse(input, options) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c26); }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = peg$currPos;
       s3 = [];
+      // istanbul ignore else
       if (peg$c27.test(input.charAt(peg$currPos))) {
         s4 = input.charAt(peg$currPos);
         peg$currPos++;
@@ -2773,8 +2999,10 @@ function peg$parse(input, options) {
         s4 = peg$FAILED;
         if (peg$silentFails === 0) { peg$fail(peg$c28); }
       }
+      // istanbul ignore else
       if (s4 === peg$FAILED) {
         s4 = peg$currPos;
+        // istanbul ignore else
         if (input.charCodeAt(peg$currPos) === 92) {
           s5 = peg$c21;
           peg$currPos++;
@@ -2783,7 +3011,9 @@ function peg$parse(input, options) {
           s5 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c22); }
         }
+        // istanbul ignore else
         if (s5 !== peg$FAILED) {
+          // istanbul ignore else
           if (input.length > peg$currPos) {
             s6 = input.charAt(peg$currPos);
             peg$currPos++;
@@ -2792,6 +3022,7 @@ function peg$parse(input, options) {
             s6 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c23); }
           }
+          // istanbul ignore else
           if (s6 !== peg$FAILED) {
             s5 = [s5, s6];
             s4 = s5;
@@ -2808,6 +3039,7 @@ function peg$parse(input, options) {
       }
       while (s4 !== peg$FAILED) {
         s3.push(s4);
+        // istanbul ignore else
         if (peg$c27.test(input.charAt(peg$currPos))) {
           s4 = input.charAt(peg$currPos);
           peg$currPos++;
@@ -2816,8 +3048,10 @@ function peg$parse(input, options) {
           s4 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c28); }
         }
+        // istanbul ignore else
         if (s4 === peg$FAILED) {
           s4 = peg$currPos;
+          // istanbul ignore else
           if (input.charCodeAt(peg$currPos) === 92) {
             s5 = peg$c21;
             peg$currPos++;
@@ -2826,7 +3060,9 @@ function peg$parse(input, options) {
             s5 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c22); }
           }
+          // istanbul ignore else
           if (s5 !== peg$FAILED) {
+            // istanbul ignore else
             if (input.length > peg$currPos) {
               s6 = input.charAt(peg$currPos);
               peg$currPos++;
@@ -2835,6 +3071,7 @@ function peg$parse(input, options) {
               s6 = peg$FAILED;
               if (peg$silentFails === 0) { peg$fail(peg$c23); }
             }
+            // istanbul ignore else
             if (s6 !== peg$FAILED) {
               s5 = [s5, s6];
               s4 = s5;
@@ -2850,13 +3087,16 @@ function peg$parse(input, options) {
           }
         }
       }
+      // istanbul ignore else
       if (s3 !== peg$FAILED) {
         s2 = input.substring(s2, peg$currPos);
       }
       else {
         s2 = s3;
       }
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
+        // istanbul ignore else
         if (input.charCodeAt(peg$currPos) === 34) {
           s3 = peg$c25;
           peg$currPos++;
@@ -2865,6 +3105,7 @@ function peg$parse(input, options) {
           s3 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c26); }
         }
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           peg$savedPos = s0;
           s1 = peg$c61(s2);
@@ -2884,8 +3125,10 @@ function peg$parse(input, options) {
       peg$currPos = s0;
       s0 = peg$FAILED;
     }
+    // istanbul ignore else
     if (s0 === peg$FAILED) {
       s0 = peg$currPos;
+      // istanbul ignore else
       if (input.charCodeAt(peg$currPos) === 39) {
         s1 = peg$c17;
         peg$currPos++;
@@ -2894,9 +3137,11 @@ function peg$parse(input, options) {
         s1 = peg$FAILED;
         if (peg$silentFails === 0) { peg$fail(peg$c18); }
       }
+      // istanbul ignore else
       if (s1 !== peg$FAILED) {
         s2 = peg$currPos;
         s3 = [];
+        // istanbul ignore else
         if (peg$c19.test(input.charAt(peg$currPos))) {
           s4 = input.charAt(peg$currPos);
           peg$currPos++;
@@ -2905,8 +3150,10 @@ function peg$parse(input, options) {
           s4 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c20); }
         }
+        // istanbul ignore else
         if (s4 === peg$FAILED) {
           s4 = peg$currPos;
+          // istanbul ignore else
           if (input.charCodeAt(peg$currPos) === 92) {
             s5 = peg$c21;
             peg$currPos++;
@@ -2915,7 +3162,9 @@ function peg$parse(input, options) {
             s5 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c22); }
           }
+          // istanbul ignore else
           if (s5 !== peg$FAILED) {
+            // istanbul ignore else
             if (input.length > peg$currPos) {
               s6 = input.charAt(peg$currPos);
               peg$currPos++;
@@ -2924,6 +3173,7 @@ function peg$parse(input, options) {
               s6 = peg$FAILED;
               if (peg$silentFails === 0) { peg$fail(peg$c23); }
             }
+            // istanbul ignore else
             if (s6 !== peg$FAILED) {
               s5 = [s5, s6];
               s4 = s5;
@@ -2940,6 +3190,7 @@ function peg$parse(input, options) {
         }
         while (s4 !== peg$FAILED) {
           s3.push(s4);
+          // istanbul ignore else
           if (peg$c19.test(input.charAt(peg$currPos))) {
             s4 = input.charAt(peg$currPos);
             peg$currPos++;
@@ -2948,8 +3199,10 @@ function peg$parse(input, options) {
             s4 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c20); }
           }
+          // istanbul ignore else
           if (s4 === peg$FAILED) {
             s4 = peg$currPos;
+            // istanbul ignore else
             if (input.charCodeAt(peg$currPos) === 92) {
               s5 = peg$c21;
               peg$currPos++;
@@ -2958,7 +3211,9 @@ function peg$parse(input, options) {
               s5 = peg$FAILED;
               if (peg$silentFails === 0) { peg$fail(peg$c22); }
             }
+            // istanbul ignore else
             if (s5 !== peg$FAILED) {
+              // istanbul ignore else
               if (input.length > peg$currPos) {
                 s6 = input.charAt(peg$currPos);
                 peg$currPos++;
@@ -2967,6 +3222,7 @@ function peg$parse(input, options) {
                 s6 = peg$FAILED;
                 if (peg$silentFails === 0) { peg$fail(peg$c23); }
               }
+              // istanbul ignore else
               if (s6 !== peg$FAILED) {
                 s5 = [s5, s6];
                 s4 = s5;
@@ -2982,13 +3238,16 @@ function peg$parse(input, options) {
             }
           }
         }
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           s2 = input.substring(s2, peg$currPos);
         }
         else {
           s2 = s3;
         }
+        // istanbul ignore else
         if (s2 !== peg$FAILED) {
+          // istanbul ignore else
           if (input.charCodeAt(peg$currPos) === 39) {
             s3 = peg$c17;
             peg$currPos++;
@@ -2997,6 +3256,7 @@ function peg$parse(input, options) {
             s3 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c18); }
           }
+          // istanbul ignore else
           if (s3 !== peg$FAILED) {
             peg$savedPos = s0;
             s1 = peg$c62(s2);
@@ -3028,7 +3288,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 20,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -3037,15 +3297,19 @@ function peg$parse(input, options) {
 
     s0 = peg$currPos;
     s1 = peg$parseBinNumberLiteralExpr();
+    // istanbul ignore else
     if (s1 === peg$FAILED) {
       s1 = peg$parseOctNumberLiteralExpr();
+      // istanbul ignore else
       if (s1 === peg$FAILED) {
         s1 = peg$parseHexNumberLiteralExpr();
+        // istanbul ignore else
         if (s1 === peg$FAILED) {
           s1 = peg$parseDecimalNumberLiteralExpr();
         }
       }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       peg$savedPos = s0;
       s1 = peg$c63(s1);
@@ -3062,7 +3326,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 21,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -3071,6 +3335,7 @@ function peg$parse(input, options) {
 
     s0 = peg$currPos;
     s1 = peg$currPos;
+    // istanbul ignore else
     if (input.charCodeAt(peg$currPos) === 43) {
       s2 = peg$c64;
       peg$currPos++;
@@ -3079,7 +3344,9 @@ function peg$parse(input, options) {
       s2 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c65); }
     }
+    // istanbul ignore else
     if (s2 === peg$FAILED) {
+      // istanbul ignore else
       if (input.charCodeAt(peg$currPos) === 45) {
         s2 = peg$c66;
         peg$currPos++;
@@ -3089,11 +3356,14 @@ function peg$parse(input, options) {
         if (peg$silentFails === 0) { peg$fail(peg$c67); }
       }
     }
+    // istanbul ignore else
     if (s2 === peg$FAILED) {
       s2 = null;
     }
+    // istanbul ignore else
     if (s2 !== peg$FAILED) {
       s3 = peg$parseUnsignedDecimalNumberLiteralExpr();
+      // istanbul ignore else
       if (s3 !== peg$FAILED) {
         s2 = [s2, s3];
         s1 = s2;
@@ -3107,6 +3377,7 @@ function peg$parse(input, options) {
       peg$currPos = s1;
       s1 = peg$FAILED;
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s0 = input.substring(s0, peg$currPos);
     }
@@ -3124,7 +3395,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 22,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -3135,6 +3406,7 @@ function peg$parse(input, options) {
     s1 = peg$currPos;
     s2 = peg$currPos;
     s3 = [];
+    // istanbul ignore else
     if (peg$c68.test(input.charAt(peg$currPos))) {
       s4 = input.charAt(peg$currPos);
       peg$currPos++;
@@ -3143,9 +3415,11 @@ function peg$parse(input, options) {
       s4 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c69); }
     }
+    // istanbul ignore else
     if (s4 !== peg$FAILED) {
       while (s4 !== peg$FAILED) {
         s3.push(s4);
+        // istanbul ignore else
         if (peg$c68.test(input.charAt(peg$currPos))) {
           s4 = input.charAt(peg$currPos);
           peg$currPos++;
@@ -3159,8 +3433,10 @@ function peg$parse(input, options) {
     else {
       s3 = peg$FAILED;
     }
+    // istanbul ignore else
     if (s3 !== peg$FAILED) {
       s4 = peg$currPos;
+      // istanbul ignore else
       if (input.charCodeAt(peg$currPos) === 46) {
         s5 = peg$c31;
         peg$currPos++;
@@ -3169,8 +3445,10 @@ function peg$parse(input, options) {
         s5 = peg$FAILED;
         if (peg$silentFails === 0) { peg$fail(peg$c32); }
       }
+      // istanbul ignore else
       if (s5 !== peg$FAILED) {
         s6 = [];
+        // istanbul ignore else
         if (peg$c68.test(input.charAt(peg$currPos))) {
           s7 = input.charAt(peg$currPos);
           peg$currPos++;
@@ -3179,9 +3457,11 @@ function peg$parse(input, options) {
           s7 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c69); }
         }
+        // istanbul ignore else
         if (s7 !== peg$FAILED) {
           while (s7 !== peg$FAILED) {
             s6.push(s7);
+            // istanbul ignore else
             if (peg$c68.test(input.charAt(peg$currPos))) {
               s7 = input.charAt(peg$currPos);
               peg$currPos++;
@@ -3195,6 +3475,7 @@ function peg$parse(input, options) {
         else {
           s6 = peg$FAILED;
         }
+        // istanbul ignore else
         if (s6 !== peg$FAILED) {
           s5 = [s5, s6];
           s4 = s5;
@@ -3208,9 +3489,11 @@ function peg$parse(input, options) {
         peg$currPos = s4;
         s4 = peg$FAILED;
       }
+      // istanbul ignore else
       if (s4 === peg$FAILED) {
         s4 = null;
       }
+      // istanbul ignore else
       if (s4 !== peg$FAILED) {
         s3 = [s3, s4];
         s2 = s3;
@@ -3224,8 +3507,10 @@ function peg$parse(input, options) {
       peg$currPos = s2;
       s2 = peg$FAILED;
     }
+    // istanbul ignore else
     if (s2 === peg$FAILED) {
       s2 = peg$currPos;
+      // istanbul ignore else
       if (input.charCodeAt(peg$currPos) === 46) {
         s3 = peg$c31;
         peg$currPos++;
@@ -3234,8 +3519,10 @@ function peg$parse(input, options) {
         s3 = peg$FAILED;
         if (peg$silentFails === 0) { peg$fail(peg$c32); }
       }
+      // istanbul ignore else
       if (s3 !== peg$FAILED) {
         s4 = [];
+        // istanbul ignore else
         if (peg$c68.test(input.charAt(peg$currPos))) {
           s5 = input.charAt(peg$currPos);
           peg$currPos++;
@@ -3244,9 +3531,11 @@ function peg$parse(input, options) {
           s5 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c69); }
         }
+        // istanbul ignore else
         if (s5 !== peg$FAILED) {
           while (s5 !== peg$FAILED) {
             s4.push(s5);
+            // istanbul ignore else
             if (peg$c68.test(input.charAt(peg$currPos))) {
               s5 = input.charAt(peg$currPos);
               peg$currPos++;
@@ -3260,6 +3549,7 @@ function peg$parse(input, options) {
         else {
           s4 = peg$FAILED;
         }
+        // istanbul ignore else
         if (s4 !== peg$FAILED) {
           s3 = [s3, s4];
           s2 = s3;
@@ -3274,8 +3564,10 @@ function peg$parse(input, options) {
         s2 = peg$FAILED;
       }
     }
+    // istanbul ignore else
     if (s2 !== peg$FAILED) {
       s3 = peg$currPos;
+      // istanbul ignore else
       if (input.charCodeAt(peg$currPos) === 101) {
         s4 = peg$c70;
         peg$currPos++;
@@ -3284,7 +3576,9 @@ function peg$parse(input, options) {
         s4 = peg$FAILED;
         if (peg$silentFails === 0) { peg$fail(peg$c71); }
       }
+      // istanbul ignore else
       if (s4 !== peg$FAILED) {
+        // istanbul ignore else
         if (input.charCodeAt(peg$currPos) === 43) {
           s5 = peg$c64;
           peg$currPos++;
@@ -3293,7 +3587,9 @@ function peg$parse(input, options) {
           s5 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c65); }
         }
+        // istanbul ignore else
         if (s5 === peg$FAILED) {
+          // istanbul ignore else
           if (input.charCodeAt(peg$currPos) === 45) {
             s5 = peg$c66;
             peg$currPos++;
@@ -3303,11 +3599,14 @@ function peg$parse(input, options) {
             if (peg$silentFails === 0) { peg$fail(peg$c67); }
           }
         }
+        // istanbul ignore else
         if (s5 === peg$FAILED) {
           s5 = null;
         }
+        // istanbul ignore else
         if (s5 !== peg$FAILED) {
           s6 = [];
+          // istanbul ignore else
           if (peg$c68.test(input.charAt(peg$currPos))) {
             s7 = input.charAt(peg$currPos);
             peg$currPos++;
@@ -3316,9 +3615,11 @@ function peg$parse(input, options) {
             s7 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c69); }
           }
+          // istanbul ignore else
           if (s7 !== peg$FAILED) {
             while (s7 !== peg$FAILED) {
               s6.push(s7);
+              // istanbul ignore else
               if (peg$c68.test(input.charAt(peg$currPos))) {
                 s7 = input.charAt(peg$currPos);
                 peg$currPos++;
@@ -3332,6 +3633,7 @@ function peg$parse(input, options) {
           else {
             s6 = peg$FAILED;
           }
+          // istanbul ignore else
           if (s6 !== peg$FAILED) {
             s4 = [s4, s5, s6];
             s3 = s4;
@@ -3350,9 +3652,11 @@ function peg$parse(input, options) {
         peg$currPos = s3;
         s3 = peg$FAILED;
       }
+      // istanbul ignore else
       if (s3 === peg$FAILED) {
         s3 = null;
       }
+      // istanbul ignore else
       if (s3 !== peg$FAILED) {
         s2 = [s2, s3];
         s1 = s2;
@@ -3366,6 +3670,7 @@ function peg$parse(input, options) {
       peg$currPos = s1;
       s1 = peg$FAILED;
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s0 = input.substring(s0, peg$currPos);
     }
@@ -3383,7 +3688,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 23,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -3392,6 +3697,7 @@ function peg$parse(input, options) {
 
     s0 = peg$currPos;
     s1 = peg$currPos;
+    // istanbul ignore else
     if (input.charCodeAt(peg$currPos) === 45) {
       s2 = peg$c66;
       peg$currPos++;
@@ -3400,10 +3706,13 @@ function peg$parse(input, options) {
       s2 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c67); }
     }
+    // istanbul ignore else
     if (s2 === peg$FAILED) {
       s2 = null;
     }
+    // istanbul ignore else
     if (s2 !== peg$FAILED) {
+      // istanbul ignore else
       if (input.substr(peg$currPos, 2) === peg$c72) {
         s3 = peg$c72;
         peg$currPos += 2;
@@ -3412,8 +3721,10 @@ function peg$parse(input, options) {
         s3 = peg$FAILED;
         if (peg$silentFails === 0) { peg$fail(peg$c73); }
       }
+      // istanbul ignore else
       if (s3 !== peg$FAILED) {
         s4 = [];
+        // istanbul ignore else
         if (peg$c74.test(input.charAt(peg$currPos))) {
           s5 = input.charAt(peg$currPos);
           peg$currPos++;
@@ -3422,9 +3733,11 @@ function peg$parse(input, options) {
           s5 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c75); }
         }
+        // istanbul ignore else
         if (s5 !== peg$FAILED) {
           while (s5 !== peg$FAILED) {
             s4.push(s5);
+            // istanbul ignore else
             if (peg$c74.test(input.charAt(peg$currPos))) {
               s5 = input.charAt(peg$currPos);
               peg$currPos++;
@@ -3438,6 +3751,7 @@ function peg$parse(input, options) {
         else {
           s4 = peg$FAILED;
         }
+        // istanbul ignore else
         if (s4 !== peg$FAILED) {
           s2 = [s2, s3, s4];
           s1 = s2;
@@ -3456,6 +3770,7 @@ function peg$parse(input, options) {
       peg$currPos = s1;
       s1 = peg$FAILED;
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s0 = input.substring(s0, peg$currPos);
     }
@@ -3473,7 +3788,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 24,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -3482,6 +3797,7 @@ function peg$parse(input, options) {
 
     s0 = peg$currPos;
     s1 = peg$currPos;
+    // istanbul ignore else
     if (input.charCodeAt(peg$currPos) === 45) {
       s2 = peg$c66;
       peg$currPos++;
@@ -3490,10 +3806,13 @@ function peg$parse(input, options) {
       s2 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c67); }
     }
+    // istanbul ignore else
     if (s2 === peg$FAILED) {
       s2 = null;
     }
+    // istanbul ignore else
     if (s2 !== peg$FAILED) {
+      // istanbul ignore else
       if (input.substr(peg$currPos, 2) === peg$c76) {
         s3 = peg$c76;
         peg$currPos += 2;
@@ -3502,8 +3821,10 @@ function peg$parse(input, options) {
         s3 = peg$FAILED;
         if (peg$silentFails === 0) { peg$fail(peg$c77); }
       }
+      // istanbul ignore else
       if (s3 !== peg$FAILED) {
         s4 = [];
+        // istanbul ignore else
         if (peg$c78.test(input.charAt(peg$currPos))) {
           s5 = input.charAt(peg$currPos);
           peg$currPos++;
@@ -3512,9 +3833,11 @@ function peg$parse(input, options) {
           s5 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c79); }
         }
+        // istanbul ignore else
         if (s5 !== peg$FAILED) {
           while (s5 !== peg$FAILED) {
             s4.push(s5);
+            // istanbul ignore else
             if (peg$c78.test(input.charAt(peg$currPos))) {
               s5 = input.charAt(peg$currPos);
               peg$currPos++;
@@ -3528,6 +3851,7 @@ function peg$parse(input, options) {
         else {
           s4 = peg$FAILED;
         }
+        // istanbul ignore else
         if (s4 !== peg$FAILED) {
           s2 = [s2, s3, s4];
           s1 = s2;
@@ -3546,6 +3870,7 @@ function peg$parse(input, options) {
       peg$currPos = s1;
       s1 = peg$FAILED;
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s0 = input.substring(s0, peg$currPos);
     }
@@ -3563,7 +3888,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 25,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -3572,6 +3897,7 @@ function peg$parse(input, options) {
 
     s0 = peg$currPos;
     s1 = peg$currPos;
+    // istanbul ignore else
     if (input.charCodeAt(peg$currPos) === 45) {
       s2 = peg$c66;
       peg$currPos++;
@@ -3580,10 +3906,13 @@ function peg$parse(input, options) {
       s2 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c67); }
     }
+    // istanbul ignore else
     if (s2 === peg$FAILED) {
       s2 = null;
     }
+    // istanbul ignore else
     if (s2 !== peg$FAILED) {
+      // istanbul ignore else
       if (input.substr(peg$currPos, 2) === peg$c80) {
         s3 = peg$c80;
         peg$currPos += 2;
@@ -3592,8 +3921,10 @@ function peg$parse(input, options) {
         s3 = peg$FAILED;
         if (peg$silentFails === 0) { peg$fail(peg$c81); }
       }
+      // istanbul ignore else
       if (s3 !== peg$FAILED) {
         s4 = [];
+        // istanbul ignore else
         if (peg$c82.test(input.charAt(peg$currPos))) {
           s5 = input.charAt(peg$currPos);
           peg$currPos++;
@@ -3602,9 +3933,11 @@ function peg$parse(input, options) {
           s5 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c83); }
         }
+        // istanbul ignore else
         if (s5 !== peg$FAILED) {
           while (s5 !== peg$FAILED) {
             s4.push(s5);
+            // istanbul ignore else
             if (peg$c82.test(input.charAt(peg$currPos))) {
               s5 = input.charAt(peg$currPos);
               peg$currPos++;
@@ -3618,6 +3951,7 @@ function peg$parse(input, options) {
         else {
           s4 = peg$FAILED;
         }
+        // istanbul ignore else
         if (s4 !== peg$FAILED) {
           s2 = [s2, s3, s4];
           s1 = s2;
@@ -3636,6 +3970,7 @@ function peg$parse(input, options) {
       peg$currPos = s1;
       s1 = peg$FAILED;
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s0 = input.substring(s0, peg$currPos);
     }
@@ -3653,7 +3988,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 26,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -3662,17 +3997,23 @@ function peg$parse(input, options) {
 
     s0 = peg$currPos;
     s1 = peg$parseUnionTypeExprOperand();
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = peg$parse_();
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
         s3 = peg$parseUnionTypeOperator();
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           s4 = peg$parse_();
+          // istanbul ignore else
           if (s4 !== peg$FAILED) {
             s5 = peg$parseUnionTypeExpr();
+            // istanbul ignore else
             if (s5 === peg$FAILED) {
               s5 = peg$parseUnionTypeExprOperand();
             }
+            // istanbul ignore else
             if (s5 !== peg$FAILED) {
               peg$savedPos = s0;
               s1 = peg$c84(s1, s3, s5);
@@ -3713,7 +4054,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 27,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -3721,6 +4062,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$parseUnionTypeOperatorClosureLibraryFlavored();
+    // istanbul ignore else
     if (s0 === peg$FAILED) {
       s0 = peg$parseUnionTypeOperatorJSDuckFlavored();
     }
@@ -3735,7 +4077,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 28,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -3743,6 +4085,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$currPos;
+    // istanbul ignore else
     if (input.charCodeAt(peg$currPos) === 124) {
       s1 = peg$c85;
       peg$currPos++;
@@ -3751,6 +4094,7 @@ function peg$parse(input, options) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c86); }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       peg$savedPos = s0;
       s1 = peg$c87();
@@ -3767,7 +4111,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 29,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -3775,6 +4119,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$currPos;
+    // istanbul ignore else
     if (input.charCodeAt(peg$currPos) === 47) {
       s1 = peg$c88;
       peg$currPos++;
@@ -3783,6 +4128,7 @@ function peg$parse(input, options) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c89); }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       peg$savedPos = s0;
       s1 = peg$c90();
@@ -3799,7 +4145,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 30,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -3807,30 +4153,43 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$parseUnaryUnionTypeExpr();
+    // istanbul ignore else
     if (s0 === peg$FAILED) {
       s0 = peg$parseRecordTypeExpr();
+      // istanbul ignore else
       if (s0 === peg$FAILED) {
         s0 = peg$parseTupleTypeExpr();
+        // istanbul ignore else
         if (s0 === peg$FAILED) {
           s0 = peg$parseArrowTypeExpr();
+          // istanbul ignore else
           if (s0 === peg$FAILED) {
             s0 = peg$parseFunctionTypeExpr();
+            // istanbul ignore else
             if (s0 === peg$FAILED) {
               s0 = peg$parseParenthesizedExpr();
+              // istanbul ignore else
               if (s0 === peg$FAILED) {
                 s0 = peg$parseTypeQueryExpr();
+                // istanbul ignore else
                 if (s0 === peg$FAILED) {
                   s0 = peg$parseKeyQueryExpr();
+                  // istanbul ignore else
                   if (s0 === peg$FAILED) {
                     s0 = peg$parseGenericTypeExpr();
+                    // istanbul ignore else
                     if (s0 === peg$FAILED) {
                       s0 = peg$parseArrayTypeExpr();
+                      // istanbul ignore else
                       if (s0 === peg$FAILED) {
                         s0 = peg$parseBroadNamepathExpr();
+                        // istanbul ignore else
                         if (s0 === peg$FAILED) {
                           s0 = peg$parseValueExpr();
+                          // istanbul ignore else
                           if (s0 === peg$FAILED) {
                             s0 = peg$parseAnyTypeExpr();
+                            // istanbul ignore else
                             if (s0 === peg$FAILED) {
                               s0 = peg$parseUnknownTypeExpr();
                             }
@@ -3857,7 +4216,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 31,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -3865,6 +4224,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$parseSuffixUnaryUnionTypeExpr();
+    // istanbul ignore else
     if (s0 === peg$FAILED) {
       s0 = peg$parsePrefixUnaryUnionTypeExpr();
     }
@@ -3879,7 +4239,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 32,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -3887,8 +4247,10 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$parsePrefixOptionalTypeExpr();
+    // istanbul ignore else
     if (s0 === peg$FAILED) {
       s0 = peg$parsePrefixNotNullableTypeExpr();
+      // istanbul ignore else
       if (s0 === peg$FAILED) {
         s0 = peg$parsePrefixNullableTypeExpr();
       }
@@ -3904,7 +4266,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 33,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -3912,22 +4274,31 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$parseGenericTypeExpr();
+    // istanbul ignore else
     if (s0 === peg$FAILED) {
       s0 = peg$parseRecordTypeExpr();
+      // istanbul ignore else
       if (s0 === peg$FAILED) {
         s0 = peg$parseTupleTypeExpr();
+        // istanbul ignore else
         if (s0 === peg$FAILED) {
           s0 = peg$parseArrowTypeExpr();
+          // istanbul ignore else
           if (s0 === peg$FAILED) {
             s0 = peg$parseFunctionTypeExpr();
+            // istanbul ignore else
             if (s0 === peg$FAILED) {
               s0 = peg$parseParenthesizedExpr();
+              // istanbul ignore else
               if (s0 === peg$FAILED) {
                 s0 = peg$parseBroadNamepathExpr();
+                // istanbul ignore else
                 if (s0 === peg$FAILED) {
                   s0 = peg$parseValueExpr();
+                  // istanbul ignore else
                   if (s0 === peg$FAILED) {
                     s0 = peg$parseAnyTypeExpr();
+                    // istanbul ignore else
                     if (s0 === peg$FAILED) {
                       s0 = peg$parseUnknownTypeExpr();
                     }
@@ -3950,7 +4321,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 34,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -3958,6 +4329,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$currPos;
+    // istanbul ignore else
     if (input.substr(peg$currPos, 6) === peg$c91) {
       s1 = peg$c91;
       peg$currPos += 6;
@@ -3966,10 +4338,13 @@ function peg$parse(input, options) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c92); }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = peg$parse_();
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
         s3 = peg$parseQualifiedMemberName();
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           peg$savedPos = s0;
           s1 = peg$c93(s1, s3);
@@ -4000,7 +4375,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 35,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -4008,6 +4383,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$currPos;
+    // istanbul ignore else
     if (input.substr(peg$currPos, 5) === peg$c94) {
       s1 = peg$c94;
       peg$currPos += 5;
@@ -4016,10 +4392,13 @@ function peg$parse(input, options) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c95); }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = peg$parse_();
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
         s3 = peg$parseKeyQueryExprOperand();
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           peg$savedPos = s0;
           s1 = peg$c96(s1, s3);
@@ -4050,7 +4429,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 36,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -4058,30 +4437,43 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$parseUnionTypeExpr();
+    // istanbul ignore else
     if (s0 === peg$FAILED) {
       s0 = peg$parseUnaryUnionTypeExpr();
+      // istanbul ignore else
       if (s0 === peg$FAILED) {
         s0 = peg$parseRecordTypeExpr();
+        // istanbul ignore else
         if (s0 === peg$FAILED) {
           s0 = peg$parseTupleTypeExpr();
+          // istanbul ignore else
           if (s0 === peg$FAILED) {
             s0 = peg$parseFunctionTypeExpr();
+            // istanbul ignore else
             if (s0 === peg$FAILED) {
               s0 = peg$parseParenthesizedExpr();
+              // istanbul ignore else
               if (s0 === peg$FAILED) {
                 s0 = peg$parseTypeQueryExpr();
+                // istanbul ignore else
                 if (s0 === peg$FAILED) {
                   s0 = peg$parseKeyQueryExpr();
+                  // istanbul ignore else
                   if (s0 === peg$FAILED) {
                     s0 = peg$parseArrayTypeExpr();
+                    // istanbul ignore else
                     if (s0 === peg$FAILED) {
                       s0 = peg$parseGenericTypeExpr();
+                      // istanbul ignore else
                       if (s0 === peg$FAILED) {
                         s0 = peg$parseBroadNamepathExpr();
+                        // istanbul ignore else
                         if (s0 === peg$FAILED) {
                           s0 = peg$parseValueExpr();
+                          // istanbul ignore else
                           if (s0 === peg$FAILED) {
                             s0 = peg$parseAnyTypeExpr();
+                            // istanbul ignore else
                             if (s0 === peg$FAILED) {
                               s0 = peg$parseUnknownTypeExpr();
                             }
@@ -4108,7 +4500,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 37,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -4116,6 +4508,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$currPos;
+    // istanbul ignore else
     if (input.substr(peg$currPos, 6) === peg$c97) {
       s1 = peg$c97;
       peg$currPos += 6;
@@ -4124,9 +4517,12 @@ function peg$parse(input, options) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c98); }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = peg$parse_();
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
+        // istanbul ignore else
         if (input.charCodeAt(peg$currPos) === 40) {
           s3 = peg$c99;
           peg$currPos++;
@@ -4135,13 +4531,18 @@ function peg$parse(input, options) {
           s3 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c100); }
         }
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           s4 = peg$parse_();
+          // istanbul ignore else
           if (s4 !== peg$FAILED) {
             s5 = peg$parseStringLiteralExpr();
+            // istanbul ignore else
             if (s5 !== peg$FAILED) {
               s6 = peg$parse_();
+              // istanbul ignore else
               if (s6 !== peg$FAILED) {
+                // istanbul ignore else
                 if (input.charCodeAt(peg$currPos) === 41) {
                   s7 = peg$c101;
                   peg$currPos++;
@@ -4150,6 +4551,7 @@ function peg$parse(input, options) {
                   s7 = peg$FAILED;
                   if (peg$silentFails === 0) { peg$fail(peg$c102); }
                 }
+                // istanbul ignore else
                 if (s7 !== peg$FAILED) {
                   peg$savedPos = s0;
                   s1 = peg$c103(s1, s5);
@@ -4200,7 +4602,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 38,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -4208,6 +4610,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$currPos;
+    // istanbul ignore else
     if (input.charCodeAt(peg$currPos) === 63) {
       s1 = peg$c58;
       peg$currPos++;
@@ -4216,10 +4619,13 @@ function peg$parse(input, options) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c59); }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = peg$parse_();
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
         s3 = peg$parsePrefixUnaryUnionTypeExprOperand();
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           peg$savedPos = s0;
           s1 = peg$c104(s1, s3);
@@ -4250,7 +4656,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 39,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -4258,6 +4664,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$currPos;
+    // istanbul ignore else
     if (input.charCodeAt(peg$currPos) === 33) {
       s1 = peg$c105;
       peg$currPos++;
@@ -4266,10 +4673,13 @@ function peg$parse(input, options) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c106); }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = peg$parse_();
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
         s3 = peg$parsePrefixUnaryUnionTypeExprOperand();
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           peg$savedPos = s0;
           s1 = peg$c107(s1, s3);
@@ -4300,7 +4710,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 40,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -4308,6 +4718,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$currPos;
+    // istanbul ignore else
     if (input.charCodeAt(peg$currPos) === 61) {
       s1 = peg$c108;
       peg$currPos++;
@@ -4316,10 +4727,13 @@ function peg$parse(input, options) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c109); }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = peg$parse_();
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
         s3 = peg$parsePrefixUnaryUnionTypeExprOperand();
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           peg$savedPos = s0;
           s1 = peg$c110(s1, s3);
@@ -4350,7 +4764,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 41,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -4358,8 +4772,10 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$parseSuffixOptionalTypeExpr();
+    // istanbul ignore else
     if (s0 === peg$FAILED) {
       s0 = peg$parseSuffixNullableTypeExpr();
+      // istanbul ignore else
       if (s0 === peg$FAILED) {
         s0 = peg$parseSuffixNotNullableTypeExpr();
       }
@@ -4375,7 +4791,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 42,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -4383,24 +4799,34 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$parsePrefixUnaryUnionTypeExpr();
+    // istanbul ignore else
     if (s0 === peg$FAILED) {
       s0 = peg$parseGenericTypeExpr();
+      // istanbul ignore else
       if (s0 === peg$FAILED) {
         s0 = peg$parseRecordTypeExpr();
+        // istanbul ignore else
         if (s0 === peg$FAILED) {
           s0 = peg$parseTupleTypeExpr();
+          // istanbul ignore else
           if (s0 === peg$FAILED) {
             s0 = peg$parseArrowTypeExpr();
+            // istanbul ignore else
             if (s0 === peg$FAILED) {
               s0 = peg$parseFunctionTypeExpr();
+              // istanbul ignore else
               if (s0 === peg$FAILED) {
                 s0 = peg$parseParenthesizedExpr();
+                // istanbul ignore else
                 if (s0 === peg$FAILED) {
                   s0 = peg$parseBroadNamepathExpr();
+                  // istanbul ignore else
                   if (s0 === peg$FAILED) {
                     s0 = peg$parseValueExpr();
+                    // istanbul ignore else
                     if (s0 === peg$FAILED) {
                       s0 = peg$parseAnyTypeExpr();
+                      // istanbul ignore else
                       if (s0 === peg$FAILED) {
                         s0 = peg$parseUnknownTypeExpr();
                       }
@@ -4424,7 +4850,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 43,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -4433,9 +4859,12 @@ function peg$parse(input, options) {
 
     s0 = peg$currPos;
     s1 = peg$parseSuffixUnaryUnionTypeExprOperand();
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = peg$parse_();
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
+        // istanbul ignore else
         if (input.charCodeAt(peg$currPos) === 63) {
           s3 = peg$c58;
           peg$currPos++;
@@ -4444,6 +4873,7 @@ function peg$parse(input, options) {
           s3 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c59); }
         }
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           peg$savedPos = s0;
           s1 = peg$c111(s1, s3);
@@ -4474,7 +4904,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 44,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -4483,9 +4913,12 @@ function peg$parse(input, options) {
 
     s0 = peg$currPos;
     s1 = peg$parseSuffixUnaryUnionTypeExprOperand();
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = peg$parse_();
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
+        // istanbul ignore else
         if (input.charCodeAt(peg$currPos) === 33) {
           s3 = peg$c105;
           peg$currPos++;
@@ -4494,6 +4927,7 @@ function peg$parse(input, options) {
           s3 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c106); }
         }
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           peg$savedPos = s0;
           s1 = peg$c112(s1, s3);
@@ -4524,7 +4958,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 45,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -4533,15 +4967,20 @@ function peg$parse(input, options) {
 
     s0 = peg$currPos;
     s1 = peg$parseSuffixNullableTypeExpr();
+    // istanbul ignore else
     if (s1 === peg$FAILED) {
       s1 = peg$parseSuffixNotNullableTypeExpr();
+      // istanbul ignore else
       if (s1 === peg$FAILED) {
         s1 = peg$parseSuffixUnaryUnionTypeExprOperand();
       }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = peg$parse_();
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
+        // istanbul ignore else
         if (input.charCodeAt(peg$currPos) === 61) {
           s3 = peg$c108;
           peg$currPos++;
@@ -4550,6 +4989,7 @@ function peg$parse(input, options) {
           s3 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c109); }
         }
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           peg$savedPos = s0;
           s1 = peg$c113(s1, s3);
@@ -4580,7 +5020,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 46,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -4589,18 +5029,25 @@ function peg$parse(input, options) {
 
     s0 = peg$currPos;
     s1 = peg$parseGenericTypeExprOperand();
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = peg$parse_();
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
         s3 = peg$parseGenericTypeStartToken();
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           s4 = peg$parse_();
+          // istanbul ignore else
           if (s4 !== peg$FAILED) {
             s5 = peg$parseGenericTypeExprTypeParamList();
+            // istanbul ignore else
             if (s5 !== peg$FAILED) {
               s6 = peg$parse_();
+              // istanbul ignore else
               if (s6 !== peg$FAILED) {
                 s7 = peg$parseGenericTypeEndToken();
+                // istanbul ignore else
                 if (s7 !== peg$FAILED) {
                   peg$savedPos = s0;
                   s1 = peg$c114(s1, s3, s5);
@@ -4651,7 +5098,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 47,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -4659,12 +5106,16 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$parseParenthesizedExpr();
+    // istanbul ignore else
     if (s0 === peg$FAILED) {
       s0 = peg$parseBroadNamepathExpr();
+      // istanbul ignore else
       if (s0 === peg$FAILED) {
         s0 = peg$parseValueExpr();
+        // istanbul ignore else
         if (s0 === peg$FAILED) {
           s0 = peg$parseAnyTypeExpr();
+          // istanbul ignore else
           if (s0 === peg$FAILED) {
             s0 = peg$parseUnknownTypeExpr();
           }
@@ -4682,7 +5133,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 48,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -4690,32 +5141,46 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$parseUnionTypeExpr();
+    // istanbul ignore else
     if (s0 === peg$FAILED) {
       s0 = peg$parseUnaryUnionTypeExpr();
+      // istanbul ignore else
       if (s0 === peg$FAILED) {
         s0 = peg$parseRecordTypeExpr();
+        // istanbul ignore else
         if (s0 === peg$FAILED) {
           s0 = peg$parseTupleTypeExpr();
+          // istanbul ignore else
           if (s0 === peg$FAILED) {
             s0 = peg$parseArrowTypeExpr();
+            // istanbul ignore else
             if (s0 === peg$FAILED) {
               s0 = peg$parseFunctionTypeExpr();
+              // istanbul ignore else
               if (s0 === peg$FAILED) {
                 s0 = peg$parseParenthesizedExpr();
+                // istanbul ignore else
                 if (s0 === peg$FAILED) {
                   s0 = peg$parseArrayTypeExpr();
+                  // istanbul ignore else
                   if (s0 === peg$FAILED) {
                     s0 = peg$parseGenericTypeExpr();
+                    // istanbul ignore else
                     if (s0 === peg$FAILED) {
                       s0 = peg$parseTypeQueryExpr();
+                      // istanbul ignore else
                       if (s0 === peg$FAILED) {
                         s0 = peg$parseKeyQueryExpr();
+                        // istanbul ignore else
                         if (s0 === peg$FAILED) {
                           s0 = peg$parseBroadNamepathExpr();
+                          // istanbul ignore else
                           if (s0 === peg$FAILED) {
                             s0 = peg$parseValueExpr();
+                            // istanbul ignore else
                             if (s0 === peg$FAILED) {
                               s0 = peg$parseAnyTypeExpr();
+                              // istanbul ignore else
                               if (s0 === peg$FAILED) {
                                 s0 = peg$parseUnknownTypeExpr();
                               }
@@ -4743,7 +5208,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 49,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -4752,11 +5217,14 @@ function peg$parse(input, options) {
 
     s0 = peg$currPos;
     s1 = peg$parseGenericTypeExprTypeParamOperand();
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = [];
       s3 = peg$currPos;
       s4 = peg$parse_();
+      // istanbul ignore else
       if (s4 !== peg$FAILED) {
+        // istanbul ignore else
         if (input.charCodeAt(peg$currPos) === 44) {
           s5 = peg$c115;
           peg$currPos++;
@@ -4765,10 +5233,13 @@ function peg$parse(input, options) {
           s5 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c116); }
         }
+        // istanbul ignore else
         if (s5 !== peg$FAILED) {
           s6 = peg$parse_();
+          // istanbul ignore else
           if (s6 !== peg$FAILED) {
             s7 = peg$parseGenericTypeExprTypeParamOperand();
+            // istanbul ignore else
             if (s7 !== peg$FAILED) {
               s4 = [s4, s5, s6, s7];
               s3 = s4;
@@ -4796,7 +5267,9 @@ function peg$parse(input, options) {
         s2.push(s3);
         s3 = peg$currPos;
         s4 = peg$parse_();
+        // istanbul ignore else
         if (s4 !== peg$FAILED) {
+          // istanbul ignore else
           if (input.charCodeAt(peg$currPos) === 44) {
             s5 = peg$c115;
             peg$currPos++;
@@ -4805,10 +5278,13 @@ function peg$parse(input, options) {
             s5 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c116); }
           }
+          // istanbul ignore else
           if (s5 !== peg$FAILED) {
             s6 = peg$parse_();
+            // istanbul ignore else
             if (s6 !== peg$FAILED) {
               s7 = peg$parseGenericTypeExprTypeParamOperand();
+              // istanbul ignore else
               if (s7 !== peg$FAILED) {
                 s4 = [s4, s5, s6, s7];
                 s3 = s4;
@@ -4833,6 +5309,7 @@ function peg$parse(input, options) {
           s3 = peg$FAILED;
         }
       }
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
         peg$savedPos = s0;
         s1 = peg$c117(s1, s2);
@@ -4858,7 +5335,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 50,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -4866,6 +5343,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$parseGenericTypeEcmaScriptFlavoredStartToken();
+    // istanbul ignore else
     if (s0 === peg$FAILED) {
       s0 = peg$parseGenericTypeTypeScriptFlavoredStartToken();
     }
@@ -4880,7 +5358,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 51,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -4888,6 +5366,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$currPos;
+    // istanbul ignore else
     if (input.substr(peg$currPos, 2) === peg$c118) {
       s1 = peg$c118;
       peg$currPos += 2;
@@ -4896,6 +5375,7 @@ function peg$parse(input, options) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c119); }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       peg$savedPos = s0;
       s1 = peg$c120();
@@ -4912,7 +5392,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 52,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -4920,6 +5400,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$currPos;
+    // istanbul ignore else
     if (input.charCodeAt(peg$currPos) === 60) {
       s1 = peg$c121;
       peg$currPos++;
@@ -4928,6 +5409,7 @@ function peg$parse(input, options) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c122); }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       peg$savedPos = s0;
       s1 = peg$c123();
@@ -4944,13 +5426,14 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 53,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
       return cached.result;
     }
 
+    // istanbul ignore else
     if (input.charCodeAt(peg$currPos) === 62) {
       s0 = peg$c124;
       peg$currPos++;
@@ -4970,7 +5453,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 54,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -4979,11 +5462,14 @@ function peg$parse(input, options) {
 
     s0 = peg$currPos;
     s1 = peg$parseArrayTypeExprOperand();
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = [];
       s3 = peg$currPos;
       s4 = peg$parse_();
+      // istanbul ignore else
       if (s4 !== peg$FAILED) {
+        // istanbul ignore else
         if (input.charCodeAt(peg$currPos) === 91) {
           s5 = peg$c126;
           peg$currPos++;
@@ -4992,9 +5478,12 @@ function peg$parse(input, options) {
           s5 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c127); }
         }
+        // istanbul ignore else
         if (s5 !== peg$FAILED) {
           s6 = peg$parse_();
+          // istanbul ignore else
           if (s6 !== peg$FAILED) {
+            // istanbul ignore else
             if (input.charCodeAt(peg$currPos) === 93) {
               s7 = peg$c128;
               peg$currPos++;
@@ -5003,6 +5492,7 @@ function peg$parse(input, options) {
               s7 = peg$FAILED;
               if (peg$silentFails === 0) { peg$fail(peg$c129); }
             }
+            // istanbul ignore else
             if (s7 !== peg$FAILED) {
               s4 = [s4, s5, s6, s7];
               s3 = s4;
@@ -5026,12 +5516,15 @@ function peg$parse(input, options) {
         peg$currPos = s3;
         s3 = peg$FAILED;
       }
+      // istanbul ignore else
       if (s3 !== peg$FAILED) {
         while (s3 !== peg$FAILED) {
           s2.push(s3);
           s3 = peg$currPos;
           s4 = peg$parse_();
+          // istanbul ignore else
           if (s4 !== peg$FAILED) {
+            // istanbul ignore else
             if (input.charCodeAt(peg$currPos) === 91) {
               s5 = peg$c126;
               peg$currPos++;
@@ -5040,9 +5533,12 @@ function peg$parse(input, options) {
               s5 = peg$FAILED;
               if (peg$silentFails === 0) { peg$fail(peg$c127); }
             }
+            // istanbul ignore else
             if (s5 !== peg$FAILED) {
               s6 = peg$parse_();
+              // istanbul ignore else
               if (s6 !== peg$FAILED) {
+                // istanbul ignore else
                 if (input.charCodeAt(peg$currPos) === 93) {
                   s7 = peg$c128;
                   peg$currPos++;
@@ -5051,6 +5547,7 @@ function peg$parse(input, options) {
                   s7 = peg$FAILED;
                   if (peg$silentFails === 0) { peg$fail(peg$c129); }
                 }
+                // istanbul ignore else
                 if (s7 !== peg$FAILED) {
                   s4 = [s4, s5, s6, s7];
                   s3 = s4;
@@ -5079,6 +5576,7 @@ function peg$parse(input, options) {
       else {
         s2 = peg$FAILED;
       }
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
         peg$savedPos = s0;
         s1 = peg$c130(s1, s2);
@@ -5104,7 +5602,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 55,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -5112,28 +5610,40 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$parseUnaryUnionTypeExpr();
+    // istanbul ignore else
     if (s0 === peg$FAILED) {
       s0 = peg$parseRecordTypeExpr();
+      // istanbul ignore else
       if (s0 === peg$FAILED) {
         s0 = peg$parseTupleTypeExpr();
+        // istanbul ignore else
         if (s0 === peg$FAILED) {
           s0 = peg$parseArrowTypeExpr();
+          // istanbul ignore else
           if (s0 === peg$FAILED) {
             s0 = peg$parseFunctionTypeExpr();
+            // istanbul ignore else
             if (s0 === peg$FAILED) {
               s0 = peg$parseParenthesizedExpr();
+              // istanbul ignore else
               if (s0 === peg$FAILED) {
                 s0 = peg$parseGenericTypeExpr();
+                // istanbul ignore else
                 if (s0 === peg$FAILED) {
                   s0 = peg$parseTypeQueryExpr();
+                  // istanbul ignore else
                   if (s0 === peg$FAILED) {
                     s0 = peg$parseKeyQueryExpr();
+                    // istanbul ignore else
                     if (s0 === peg$FAILED) {
                       s0 = peg$parseBroadNamepathExpr();
+                      // istanbul ignore else
                       if (s0 === peg$FAILED) {
                         s0 = peg$parseValueExpr();
+                        // istanbul ignore else
                         if (s0 === peg$FAILED) {
                           s0 = peg$parseAnyTypeExpr();
+                          // istanbul ignore else
                           if (s0 === peg$FAILED) {
                             s0 = peg$parseUnknownTypeExpr();
                           }
@@ -5159,7 +5669,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 56,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -5167,6 +5677,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$currPos;
+    // istanbul ignore else
     if (input.substr(peg$currPos, 3) === peg$c131) {
       s1 = peg$c131;
       peg$currPos += 3;
@@ -5175,16 +5686,22 @@ function peg$parse(input, options) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c132); }
     }
+    // istanbul ignore else
     if (s1 === peg$FAILED) {
       s1 = null;
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = peg$parse_();
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
         s3 = peg$parseArrowTypeExprParamsList();
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           s4 = peg$parse_();
+          // istanbul ignore else
           if (s4 !== peg$FAILED) {
+            // istanbul ignore else
             if (input.substr(peg$currPos, 2) === peg$c133) {
               s5 = peg$c133;
               peg$currPos += 2;
@@ -5193,10 +5710,13 @@ function peg$parse(input, options) {
               s5 = peg$FAILED;
               if (peg$silentFails === 0) { peg$fail(peg$c134); }
             }
+            // istanbul ignore else
             if (s5 !== peg$FAILED) {
               s6 = peg$parse_();
+              // istanbul ignore else
               if (s6 !== peg$FAILED) {
                 s7 = peg$parseFunctionTypeExprReturnableOperand();
+                // istanbul ignore else
                 if (s7 !== peg$FAILED) {
                   peg$savedPos = s0;
                   s1 = peg$c135(s1, s3, s7);
@@ -5247,7 +5767,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 57,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -5255,6 +5775,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$currPos;
+    // istanbul ignore else
     if (input.charCodeAt(peg$currPos) === 40) {
       s1 = peg$c99;
       peg$currPos++;
@@ -5263,9 +5784,12 @@ function peg$parse(input, options) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c100); }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = peg$parse_();
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
+        // istanbul ignore else
         if (input.charCodeAt(peg$currPos) === 41) {
           s3 = peg$c101;
           peg$currPos++;
@@ -5274,6 +5798,7 @@ function peg$parse(input, options) {
           s3 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c102); }
         }
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           peg$savedPos = s0;
           s1 = peg$c136();
@@ -5293,8 +5818,10 @@ function peg$parse(input, options) {
       peg$currPos = s0;
       s0 = peg$FAILED;
     }
+    // istanbul ignore else
     if (s0 === peg$FAILED) {
       s0 = peg$currPos;
+      // istanbul ignore else
       if (input.charCodeAt(peg$currPos) === 40) {
         s1 = peg$c99;
         peg$currPos++;
@@ -5303,13 +5830,18 @@ function peg$parse(input, options) {
         s1 = peg$FAILED;
         if (peg$silentFails === 0) { peg$fail(peg$c100); }
       }
+      // istanbul ignore else
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
+        // istanbul ignore else
         if (s2 !== peg$FAILED) {
           s3 = peg$parseArrowTypeExprParams();
+          // istanbul ignore else
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
+            // istanbul ignore else
             if (s4 !== peg$FAILED) {
+              // istanbul ignore else
               if (input.charCodeAt(peg$currPos) === 41) {
                 s5 = peg$c101;
                 peg$currPos++;
@@ -5318,6 +5850,7 @@ function peg$parse(input, options) {
                 s5 = peg$FAILED;
                 if (peg$silentFails === 0) { peg$fail(peg$c102); }
               }
+              // istanbul ignore else
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
                 s1 = peg$c137(s3);
@@ -5359,7 +5892,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 58,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -5370,9 +5903,12 @@ function peg$parse(input, options) {
     s1 = [];
     s2 = peg$currPos;
     s3 = peg$parseJsIdentifier();
+    // istanbul ignore else
     if (s3 !== peg$FAILED) {
       s4 = peg$parse_();
+      // istanbul ignore else
       if (s4 !== peg$FAILED) {
+        // istanbul ignore else
         if (input.charCodeAt(peg$currPos) === 58) {
           s5 = peg$c43;
           peg$currPos++;
@@ -5381,16 +5917,22 @@ function peg$parse(input, options) {
           s5 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c44); }
         }
+        // istanbul ignore else
         if (s5 !== peg$FAILED) {
           s6 = peg$parse_();
+          // istanbul ignore else
           if (s6 !== peg$FAILED) {
             s7 = peg$parseFunctionTypeExprParamOperand();
+            // istanbul ignore else
             if (s7 === peg$FAILED) {
               s7 = null;
             }
+            // istanbul ignore else
             if (s7 !== peg$FAILED) {
               s8 = peg$parse_();
+              // istanbul ignore else
               if (s8 !== peg$FAILED) {
+                // istanbul ignore else
                 if (input.charCodeAt(peg$currPos) === 44) {
                   s9 = peg$c115;
                   peg$currPos++;
@@ -5399,8 +5941,10 @@ function peg$parse(input, options) {
                   s9 = peg$FAILED;
                   if (peg$silentFails === 0) { peg$fail(peg$c116); }
                 }
+                // istanbul ignore else
                 if (s9 !== peg$FAILED) {
                   s10 = peg$parse_();
+                  // istanbul ignore else
                   if (s10 !== peg$FAILED) {
                     s3 = [s3, s4, s5, s6, s7, s8, s9, s10];
                     s2 = s3;
@@ -5448,9 +5992,12 @@ function peg$parse(input, options) {
       s1.push(s2);
       s2 = peg$currPos;
       s3 = peg$parseJsIdentifier();
+      // istanbul ignore else
       if (s3 !== peg$FAILED) {
         s4 = peg$parse_();
+        // istanbul ignore else
         if (s4 !== peg$FAILED) {
+          // istanbul ignore else
           if (input.charCodeAt(peg$currPos) === 58) {
             s5 = peg$c43;
             peg$currPos++;
@@ -5459,16 +6006,22 @@ function peg$parse(input, options) {
             s5 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c44); }
           }
+          // istanbul ignore else
           if (s5 !== peg$FAILED) {
             s6 = peg$parse_();
+            // istanbul ignore else
             if (s6 !== peg$FAILED) {
               s7 = peg$parseFunctionTypeExprParamOperand();
+              // istanbul ignore else
               if (s7 === peg$FAILED) {
                 s7 = null;
               }
+              // istanbul ignore else
               if (s7 !== peg$FAILED) {
                 s8 = peg$parse_();
+                // istanbul ignore else
                 if (s8 !== peg$FAILED) {
+                  // istanbul ignore else
                   if (input.charCodeAt(peg$currPos) === 44) {
                     s9 = peg$c115;
                     peg$currPos++;
@@ -5477,8 +6030,10 @@ function peg$parse(input, options) {
                     s9 = peg$FAILED;
                     if (peg$silentFails === 0) { peg$fail(peg$c116); }
                   }
+                  // istanbul ignore else
                   if (s9 !== peg$FAILED) {
                     s10 = peg$parse_();
+                    // istanbul ignore else
                     if (s10 !== peg$FAILED) {
                       s3 = [s3, s4, s5, s6, s7, s8, s9, s10];
                       s2 = s3;
@@ -5523,11 +6078,14 @@ function peg$parse(input, options) {
         s2 = peg$FAILED;
       }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = peg$parseVariadicNameExpr();
+      // istanbul ignore else
       if (s2 === peg$FAILED) {
         s2 = null;
       }
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
         peg$savedPos = s0;
         s1 = peg$c138(s1, s2);
@@ -5553,7 +6111,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 59,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -5561,6 +6119,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$currPos;
+    // istanbul ignore else
     if (input.substr(peg$currPos, 3) === peg$c139) {
       s1 = peg$c139;
       peg$currPos += 3;
@@ -5569,16 +6128,22 @@ function peg$parse(input, options) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c140); }
     }
+    // istanbul ignore else
     if (s1 === peg$FAILED) {
       s1 = null;
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = peg$parse_();
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
         s3 = peg$parseJsIdentifier();
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           s4 = peg$parse_();
+          // istanbul ignore else
           if (s4 !== peg$FAILED) {
+            // istanbul ignore else
             if (input.charCodeAt(peg$currPos) === 58) {
               s5 = peg$c43;
               peg$currPos++;
@@ -5587,13 +6152,17 @@ function peg$parse(input, options) {
               s5 = peg$FAILED;
               if (peg$silentFails === 0) { peg$fail(peg$c44); }
             }
+            // istanbul ignore else
             if (s5 !== peg$FAILED) {
               s6 = peg$parse_();
+              // istanbul ignore else
               if (s6 !== peg$FAILED) {
                 s7 = peg$parseFunctionTypeExprParamOperand();
+                // istanbul ignore else
                 if (s7 === peg$FAILED) {
                   s7 = null;
                 }
+                // istanbul ignore else
                 if (s7 !== peg$FAILED) {
                   peg$savedPos = s0;
                   s1 = peg$c141(s1, s3, s7);
@@ -5644,7 +6213,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 60,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -5652,6 +6221,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$currPos;
+    // istanbul ignore else
     if (input.substr(peg$currPos, 8) === peg$c142) {
       s1 = peg$c142;
       peg$currPos += 8;
@@ -5660,14 +6230,19 @@ function peg$parse(input, options) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c143); }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = peg$parse_();
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
         s3 = peg$parseFunctionTypeExprParamsList();
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           s4 = peg$parse_();
+          // istanbul ignore else
           if (s4 !== peg$FAILED) {
             s5 = peg$currPos;
+            // istanbul ignore else
             if (input.charCodeAt(peg$currPos) === 58) {
               s6 = peg$c43;
               peg$currPos++;
@@ -5676,10 +6251,13 @@ function peg$parse(input, options) {
               s6 = peg$FAILED;
               if (peg$silentFails === 0) { peg$fail(peg$c44); }
             }
+            // istanbul ignore else
             if (s6 !== peg$FAILED) {
               s7 = peg$parse_();
+              // istanbul ignore else
               if (s7 !== peg$FAILED) {
                 s8 = peg$parseFunctionTypeExprReturnableOperand();
+                // istanbul ignore else
                 if (s8 !== peg$FAILED) {
                   s6 = [s6, s7, s8];
                   s5 = s6;
@@ -5698,9 +6276,11 @@ function peg$parse(input, options) {
               peg$currPos = s5;
               s5 = peg$FAILED;
             }
+            // istanbul ignore else
             if (s5 === peg$FAILED) {
               s5 = null;
             }
+            // istanbul ignore else
             if (s5 !== peg$FAILED) {
               peg$savedPos = s0;
               s1 = peg$c144(s3, s5);
@@ -5741,7 +6321,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 61,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -5749,6 +6329,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$currPos;
+    // istanbul ignore else
     if (input.charCodeAt(peg$currPos) === 40) {
       s1 = peg$c99;
       peg$currPos++;
@@ -5757,13 +6338,18 @@ function peg$parse(input, options) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c100); }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = peg$parse_();
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
         s3 = peg$parseFunctionTypeExprModifier();
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           s4 = peg$parse_();
+          // istanbul ignore else
           if (s4 !== peg$FAILED) {
+            // istanbul ignore else
             if (input.charCodeAt(peg$currPos) === 44) {
               s5 = peg$c115;
               peg$currPos++;
@@ -5772,13 +6358,18 @@ function peg$parse(input, options) {
               s5 = peg$FAILED;
               if (peg$silentFails === 0) { peg$fail(peg$c116); }
             }
+            // istanbul ignore else
             if (s5 !== peg$FAILED) {
               s6 = peg$parse_();
+              // istanbul ignore else
               if (s6 !== peg$FAILED) {
                 s7 = peg$parseFunctionTypeExprParams();
+                // istanbul ignore else
                 if (s7 !== peg$FAILED) {
                   s8 = peg$parse_();
+                  // istanbul ignore else
                   if (s8 !== peg$FAILED) {
+                    // istanbul ignore else
                     if (input.charCodeAt(peg$currPos) === 41) {
                       s9 = peg$c101;
                       peg$currPos++;
@@ -5787,6 +6378,7 @@ function peg$parse(input, options) {
                       s9 = peg$FAILED;
                       if (peg$silentFails === 0) { peg$fail(peg$c102); }
                     }
+                    // istanbul ignore else
                     if (s9 !== peg$FAILED) {
                       peg$savedPos = s0;
                       s1 = peg$c145(s3, s7);
@@ -5836,8 +6428,10 @@ function peg$parse(input, options) {
       peg$currPos = s0;
       s0 = peg$FAILED;
     }
+    // istanbul ignore else
     if (s0 === peg$FAILED) {
       s0 = peg$currPos;
+      // istanbul ignore else
       if (input.charCodeAt(peg$currPos) === 40) {
         s1 = peg$c99;
         peg$currPos++;
@@ -5846,13 +6440,18 @@ function peg$parse(input, options) {
         s1 = peg$FAILED;
         if (peg$silentFails === 0) { peg$fail(peg$c100); }
       }
+      // istanbul ignore else
       if (s1 !== peg$FAILED) {
         s2 = peg$parse_();
+        // istanbul ignore else
         if (s2 !== peg$FAILED) {
           s3 = peg$parseFunctionTypeExprModifier();
+          // istanbul ignore else
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
+            // istanbul ignore else
             if (s4 !== peg$FAILED) {
+              // istanbul ignore else
               if (input.charCodeAt(peg$currPos) === 41) {
                 s5 = peg$c101;
                 peg$currPos++;
@@ -5861,6 +6460,7 @@ function peg$parse(input, options) {
                 s5 = peg$FAILED;
                 if (peg$silentFails === 0) { peg$fail(peg$c102); }
               }
+              // istanbul ignore else
               if (s5 !== peg$FAILED) {
                 peg$savedPos = s0;
                 s1 = peg$c146(s3);
@@ -5890,8 +6490,10 @@ function peg$parse(input, options) {
         peg$currPos = s0;
         s0 = peg$FAILED;
       }
+      // istanbul ignore else
       if (s0 === peg$FAILED) {
         s0 = peg$currPos;
+        // istanbul ignore else
         if (input.charCodeAt(peg$currPos) === 40) {
           s1 = peg$c99;
           peg$currPos++;
@@ -5900,9 +6502,12 @@ function peg$parse(input, options) {
           s1 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c100); }
         }
+        // istanbul ignore else
         if (s1 !== peg$FAILED) {
           s2 = peg$parse_();
+          // istanbul ignore else
           if (s2 !== peg$FAILED) {
+            // istanbul ignore else
             if (input.charCodeAt(peg$currPos) === 41) {
               s3 = peg$c101;
               peg$currPos++;
@@ -5911,6 +6516,7 @@ function peg$parse(input, options) {
               s3 = peg$FAILED;
               if (peg$silentFails === 0) { peg$fail(peg$c102); }
             }
+            // istanbul ignore else
             if (s3 !== peg$FAILED) {
               peg$savedPos = s0;
               s1 = peg$c147();
@@ -5930,8 +6536,10 @@ function peg$parse(input, options) {
           peg$currPos = s0;
           s0 = peg$FAILED;
         }
+        // istanbul ignore else
         if (s0 === peg$FAILED) {
           s0 = peg$currPos;
+          // istanbul ignore else
           if (input.charCodeAt(peg$currPos) === 40) {
             s1 = peg$c99;
             peg$currPos++;
@@ -5940,13 +6548,18 @@ function peg$parse(input, options) {
             s1 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c100); }
           }
+          // istanbul ignore else
           if (s1 !== peg$FAILED) {
             s2 = peg$parse_();
+            // istanbul ignore else
             if (s2 !== peg$FAILED) {
               s3 = peg$parseFunctionTypeExprParams();
+              // istanbul ignore else
               if (s3 !== peg$FAILED) {
                 s4 = peg$parse_();
+                // istanbul ignore else
                 if (s4 !== peg$FAILED) {
+                  // istanbul ignore else
                   if (input.charCodeAt(peg$currPos) === 41) {
                     s5 = peg$c101;
                     peg$currPos++;
@@ -5955,6 +6568,7 @@ function peg$parse(input, options) {
                     s5 = peg$FAILED;
                     if (peg$silentFails === 0) { peg$fail(peg$c102); }
                   }
+                  // istanbul ignore else
                   if (s5 !== peg$FAILED) {
                     peg$savedPos = s0;
                     s1 = peg$c148(s3);
@@ -5998,7 +6612,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 62,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -6007,6 +6621,7 @@ function peg$parse(input, options) {
 
     s0 = peg$currPos;
     s1 = peg$currPos;
+    // istanbul ignore else
     if (input.substr(peg$currPos, 4) === peg$c149) {
       s2 = peg$c149;
       peg$currPos += 4;
@@ -6015,9 +6630,12 @@ function peg$parse(input, options) {
       s2 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c150); }
     }
+    // istanbul ignore else
     if (s2 !== peg$FAILED) {
       s3 = peg$parse_();
+      // istanbul ignore else
       if (s3 !== peg$FAILED) {
+        // istanbul ignore else
         if (input.charCodeAt(peg$currPos) === 58) {
           s4 = peg$c43;
           peg$currPos++;
@@ -6026,10 +6644,13 @@ function peg$parse(input, options) {
           s4 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c44); }
         }
+        // istanbul ignore else
         if (s4 !== peg$FAILED) {
           s5 = peg$parse_();
+          // istanbul ignore else
           if (s5 !== peg$FAILED) {
             s6 = peg$parseFunctionTypeExprParamOperand();
+            // istanbul ignore else
             if (s6 !== peg$FAILED) {
               s2 = [s2, s3, s4, s5, s6];
               s1 = s2;
@@ -6058,14 +6679,17 @@ function peg$parse(input, options) {
       peg$currPos = s1;
       s1 = peg$FAILED;
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       peg$savedPos = s0;
       s1 = peg$c151(s1);
     }
     s0 = s1;
+    // istanbul ignore else
     if (s0 === peg$FAILED) {
       s0 = peg$currPos;
       s1 = peg$currPos;
+      // istanbul ignore else
       if (input.substr(peg$currPos, 3) === peg$c131) {
         s2 = peg$c131;
         peg$currPos += 3;
@@ -6074,9 +6698,12 @@ function peg$parse(input, options) {
         s2 = peg$FAILED;
         if (peg$silentFails === 0) { peg$fail(peg$c132); }
       }
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
         s3 = peg$parse_();
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
+          // istanbul ignore else
           if (input.charCodeAt(peg$currPos) === 58) {
             s4 = peg$c43;
             peg$currPos++;
@@ -6085,10 +6712,13 @@ function peg$parse(input, options) {
             s4 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c44); }
           }
+          // istanbul ignore else
           if (s4 !== peg$FAILED) {
             s5 = peg$parse_();
+            // istanbul ignore else
             if (s5 !== peg$FAILED) {
               s6 = peg$parseFunctionTypeExprParamOperand();
+              // istanbul ignore else
               if (s6 !== peg$FAILED) {
                 s2 = [s2, s3, s4, s5, s6];
                 s1 = s2;
@@ -6117,6 +6747,7 @@ function peg$parse(input, options) {
         peg$currPos = s1;
         s1 = peg$FAILED;
       }
+      // istanbul ignore else
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
         s1 = peg$c152(s1);
@@ -6134,7 +6765,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 63,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -6145,9 +6776,12 @@ function peg$parse(input, options) {
     s1 = [];
     s2 = peg$currPos;
     s3 = peg$parseFunctionTypeExprParamOperand();
+    // istanbul ignore else
     if (s3 !== peg$FAILED) {
       s4 = peg$parse_();
+      // istanbul ignore else
       if (s4 !== peg$FAILED) {
+        // istanbul ignore else
         if (input.charCodeAt(peg$currPos) === 44) {
           s5 = peg$c115;
           peg$currPos++;
@@ -6156,8 +6790,10 @@ function peg$parse(input, options) {
           s5 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c116); }
         }
+        // istanbul ignore else
         if (s5 !== peg$FAILED) {
           s6 = peg$parse_();
+          // istanbul ignore else
           if (s6 !== peg$FAILED) {
             s3 = [s3, s4, s5, s6];
             s2 = s3;
@@ -6185,9 +6821,12 @@ function peg$parse(input, options) {
       s1.push(s2);
       s2 = peg$currPos;
       s3 = peg$parseFunctionTypeExprParamOperand();
+      // istanbul ignore else
       if (s3 !== peg$FAILED) {
         s4 = peg$parse_();
+        // istanbul ignore else
         if (s4 !== peg$FAILED) {
+          // istanbul ignore else
           if (input.charCodeAt(peg$currPos) === 44) {
             s5 = peg$c115;
             peg$currPos++;
@@ -6196,8 +6835,10 @@ function peg$parse(input, options) {
             s5 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c116); }
           }
+          // istanbul ignore else
           if (s5 !== peg$FAILED) {
             s6 = peg$parse_();
+            // istanbul ignore else
             if (s6 !== peg$FAILED) {
               s3 = [s3, s4, s5, s6];
               s2 = s3;
@@ -6222,14 +6863,18 @@ function peg$parse(input, options) {
         s2 = peg$FAILED;
       }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = peg$parseVariadicTypeExpr();
+      // istanbul ignore else
       if (s2 === peg$FAILED) {
         s2 = peg$parseVariadicTypeExprOperand();
       }
+      // istanbul ignore else
       if (s2 === peg$FAILED) {
         s2 = null;
       }
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
         peg$savedPos = s0;
         s1 = peg$c153(s1, s2);
@@ -6255,7 +6900,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 64,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -6263,32 +6908,46 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$parseUnionTypeExpr();
+    // istanbul ignore else
     if (s0 === peg$FAILED) {
       s0 = peg$parseTypeQueryExpr();
+      // istanbul ignore else
       if (s0 === peg$FAILED) {
         s0 = peg$parseKeyQueryExpr();
+        // istanbul ignore else
         if (s0 === peg$FAILED) {
           s0 = peg$parseUnaryUnionTypeExpr();
+          // istanbul ignore else
           if (s0 === peg$FAILED) {
             s0 = peg$parseRecordTypeExpr();
+            // istanbul ignore else
             if (s0 === peg$FAILED) {
               s0 = peg$parseTupleTypeExpr();
+              // istanbul ignore else
               if (s0 === peg$FAILED) {
                 s0 = peg$parseArrowTypeExpr();
+                // istanbul ignore else
                 if (s0 === peg$FAILED) {
                   s0 = peg$parseFunctionTypeExpr();
+                  // istanbul ignore else
                   if (s0 === peg$FAILED) {
                     s0 = peg$parseParenthesizedExpr();
+                    // istanbul ignore else
                     if (s0 === peg$FAILED) {
                       s0 = peg$parseArrayTypeExpr();
+                      // istanbul ignore else
                       if (s0 === peg$FAILED) {
                         s0 = peg$parseGenericTypeExpr();
+                        // istanbul ignore else
                         if (s0 === peg$FAILED) {
                           s0 = peg$parseBroadNamepathExpr();
+                          // istanbul ignore else
                           if (s0 === peg$FAILED) {
                             s0 = peg$parseValueExpr();
+                            // istanbul ignore else
                             if (s0 === peg$FAILED) {
                               s0 = peg$parseAnyTypeExpr();
+                              // istanbul ignore else
                               if (s0 === peg$FAILED) {
                                 s0 = peg$parseUnknownTypeExpr();
                               }
@@ -6316,7 +6975,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 65,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -6324,30 +6983,43 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$parsePrefixUnaryUnionTypeExpr();
+    // istanbul ignore else
     if (s0 === peg$FAILED) {
       s0 = peg$parseRecordTypeExpr();
+      // istanbul ignore else
       if (s0 === peg$FAILED) {
         s0 = peg$parseTupleTypeExpr();
+        // istanbul ignore else
         if (s0 === peg$FAILED) {
           s0 = peg$parseArrowTypeExpr();
+          // istanbul ignore else
           if (s0 === peg$FAILED) {
             s0 = peg$parseFunctionTypeExpr();
+            // istanbul ignore else
             if (s0 === peg$FAILED) {
               s0 = peg$parseParenthesizedExpr();
+              // istanbul ignore else
               if (s0 === peg$FAILED) {
                 s0 = peg$parseArrayTypeExpr();
+                // istanbul ignore else
                 if (s0 === peg$FAILED) {
                   s0 = peg$parseTypeQueryExpr();
+                  // istanbul ignore else
                   if (s0 === peg$FAILED) {
                     s0 = peg$parseKeyQueryExpr();
+                    // istanbul ignore else
                     if (s0 === peg$FAILED) {
                       s0 = peg$parseGenericTypeExpr();
+                      // istanbul ignore else
                       if (s0 === peg$FAILED) {
                         s0 = peg$parseBroadNamepathExpr();
+                        // istanbul ignore else
                         if (s0 === peg$FAILED) {
                           s0 = peg$parseValueExpr();
+                          // istanbul ignore else
                           if (s0 === peg$FAILED) {
                             s0 = peg$parseAnyTypeExpr();
+                            // istanbul ignore else
                             if (s0 === peg$FAILED) {
                               s0 = peg$parseUnknownTypeExpr();
                             }
@@ -6374,7 +7046,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 66,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -6382,6 +7054,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$currPos;
+    // istanbul ignore else
     if (input.charCodeAt(peg$currPos) === 123) {
       s1 = peg$c154;
       peg$currPos++;
@@ -6390,16 +7063,22 @@ function peg$parse(input, options) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c155); }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = peg$parse_();
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
         s3 = peg$parseRecordTypeExprEntries();
+        // istanbul ignore else
         if (s3 === peg$FAILED) {
           s3 = null;
         }
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           s4 = peg$parse_();
+          // istanbul ignore else
           if (s4 !== peg$FAILED) {
+            // istanbul ignore else
             if (input.charCodeAt(peg$currPos) === 125) {
               s5 = peg$c156;
               peg$currPos++;
@@ -6408,6 +7087,7 @@ function peg$parse(input, options) {
               s5 = peg$FAILED;
               if (peg$silentFails === 0) { peg$fail(peg$c157); }
             }
+            // istanbul ignore else
             if (s5 !== peg$FAILED) {
               peg$savedPos = s0;
               s1 = peg$c158(s3);
@@ -6448,7 +7128,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 67,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -6457,12 +7137,15 @@ function peg$parse(input, options) {
 
     s0 = peg$currPos;
     s1 = peg$parseRecordTypeExprEntry();
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = [];
       s3 = peg$currPos;
       s4 = peg$currPos;
       s5 = peg$parse_();
+      // istanbul ignore else
       if (s5 !== peg$FAILED) {
+        // istanbul ignore else
         if (input.charCodeAt(peg$currPos) === 44) {
           s6 = peg$c115;
           peg$currPos++;
@@ -6471,6 +7154,7 @@ function peg$parse(input, options) {
           s6 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c116); }
         }
+        // istanbul ignore else
         if (s6 !== peg$FAILED) {
           s5 = [s5, s6];
           s4 = s5;
@@ -6484,10 +7168,13 @@ function peg$parse(input, options) {
         peg$currPos = s4;
         s4 = peg$FAILED;
       }
+      // istanbul ignore else
       if (s4 === peg$FAILED) {
         s4 = peg$currPos;
         s5 = peg$parse_();
+        // istanbul ignore else
         if (s5 !== peg$FAILED) {
+          // istanbul ignore else
           if (input.charCodeAt(peg$currPos) === 59) {
             s6 = peg$c159;
             peg$currPos++;
@@ -6496,6 +7183,7 @@ function peg$parse(input, options) {
             s6 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c160); }
           }
+          // istanbul ignore else
           if (s6 !== peg$FAILED) {
             s5 = [s5, s6];
             s4 = s5;
@@ -6509,9 +7197,11 @@ function peg$parse(input, options) {
           peg$currPos = s4;
           s4 = peg$FAILED;
         }
+        // istanbul ignore else
         if (s4 === peg$FAILED) {
           s4 = peg$currPos;
           s5 = [];
+          // istanbul ignore else
           if (peg$c1.test(input.charAt(peg$currPos))) {
             s6 = input.charAt(peg$currPos);
             peg$currPos++;
@@ -6522,6 +7212,7 @@ function peg$parse(input, options) {
           }
           while (s6 !== peg$FAILED) {
             s5.push(s6);
+            // istanbul ignore else
             if (peg$c1.test(input.charAt(peg$currPos))) {
               s6 = input.charAt(peg$currPos);
               peg$currPos++;
@@ -6531,7 +7222,9 @@ function peg$parse(input, options) {
               if (peg$silentFails === 0) { peg$fail(peg$c2); }
             }
           }
+          // istanbul ignore else
           if (s5 !== peg$FAILED) {
+            // istanbul ignore else
             if (peg$c3.test(input.charAt(peg$currPos))) {
               s6 = input.charAt(peg$currPos);
               peg$currPos++;
@@ -6540,10 +7233,13 @@ function peg$parse(input, options) {
               s6 = peg$FAILED;
               if (peg$silentFails === 0) { peg$fail(peg$c4); }
             }
+            // istanbul ignore else
             if (s6 === peg$FAILED) {
               s6 = null;
             }
+            // istanbul ignore else
             if (s6 !== peg$FAILED) {
+              // istanbul ignore else
               if (peg$c5.test(input.charAt(peg$currPos))) {
                 s7 = input.charAt(peg$currPos);
                 peg$currPos++;
@@ -6552,6 +7248,7 @@ function peg$parse(input, options) {
                 s7 = peg$FAILED;
                 if (peg$silentFails === 0) { peg$fail(peg$c6); }
               }
+              // istanbul ignore else
               if (s7 !== peg$FAILED) {
                 s5 = [s5, s6, s7];
                 s4 = s5;
@@ -6572,10 +7269,13 @@ function peg$parse(input, options) {
           }
         }
       }
+      // istanbul ignore else
       if (s4 !== peg$FAILED) {
         s5 = peg$parse_();
+        // istanbul ignore else
         if (s5 !== peg$FAILED) {
           s6 = peg$parseRecordTypeExprEntry();
+          // istanbul ignore else
           if (s6 !== peg$FAILED) {
             s4 = [s4, s5, s6];
             s3 = s4;
@@ -6599,7 +7299,9 @@ function peg$parse(input, options) {
         s3 = peg$currPos;
         s4 = peg$currPos;
         s5 = peg$parse_();
+        // istanbul ignore else
         if (s5 !== peg$FAILED) {
+          // istanbul ignore else
           if (input.charCodeAt(peg$currPos) === 44) {
             s6 = peg$c115;
             peg$currPos++;
@@ -6608,6 +7310,7 @@ function peg$parse(input, options) {
             s6 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c116); }
           }
+          // istanbul ignore else
           if (s6 !== peg$FAILED) {
             s5 = [s5, s6];
             s4 = s5;
@@ -6621,10 +7324,13 @@ function peg$parse(input, options) {
           peg$currPos = s4;
           s4 = peg$FAILED;
         }
+        // istanbul ignore else
         if (s4 === peg$FAILED) {
           s4 = peg$currPos;
           s5 = peg$parse_();
+          // istanbul ignore else
           if (s5 !== peg$FAILED) {
+            // istanbul ignore else
             if (input.charCodeAt(peg$currPos) === 59) {
               s6 = peg$c159;
               peg$currPos++;
@@ -6633,6 +7339,7 @@ function peg$parse(input, options) {
               s6 = peg$FAILED;
               if (peg$silentFails === 0) { peg$fail(peg$c160); }
             }
+            // istanbul ignore else
             if (s6 !== peg$FAILED) {
               s5 = [s5, s6];
               s4 = s5;
@@ -6646,9 +7353,11 @@ function peg$parse(input, options) {
             peg$currPos = s4;
             s4 = peg$FAILED;
           }
+          // istanbul ignore else
           if (s4 === peg$FAILED) {
             s4 = peg$currPos;
             s5 = [];
+            // istanbul ignore else
             if (peg$c1.test(input.charAt(peg$currPos))) {
               s6 = input.charAt(peg$currPos);
               peg$currPos++;
@@ -6659,6 +7368,7 @@ function peg$parse(input, options) {
             }
             while (s6 !== peg$FAILED) {
               s5.push(s6);
+              // istanbul ignore else
               if (peg$c1.test(input.charAt(peg$currPos))) {
                 s6 = input.charAt(peg$currPos);
                 peg$currPos++;
@@ -6668,7 +7378,9 @@ function peg$parse(input, options) {
                 if (peg$silentFails === 0) { peg$fail(peg$c2); }
               }
             }
+            // istanbul ignore else
             if (s5 !== peg$FAILED) {
+              // istanbul ignore else
               if (peg$c3.test(input.charAt(peg$currPos))) {
                 s6 = input.charAt(peg$currPos);
                 peg$currPos++;
@@ -6677,10 +7389,13 @@ function peg$parse(input, options) {
                 s6 = peg$FAILED;
                 if (peg$silentFails === 0) { peg$fail(peg$c4); }
               }
+              // istanbul ignore else
               if (s6 === peg$FAILED) {
                 s6 = null;
               }
+              // istanbul ignore else
               if (s6 !== peg$FAILED) {
+                // istanbul ignore else
                 if (peg$c5.test(input.charAt(peg$currPos))) {
                   s7 = input.charAt(peg$currPos);
                   peg$currPos++;
@@ -6689,6 +7404,7 @@ function peg$parse(input, options) {
                   s7 = peg$FAILED;
                   if (peg$silentFails === 0) { peg$fail(peg$c6); }
                 }
+                // istanbul ignore else
                 if (s7 !== peg$FAILED) {
                   s5 = [s5, s6, s7];
                   s4 = s5;
@@ -6709,10 +7425,13 @@ function peg$parse(input, options) {
             }
           }
         }
+        // istanbul ignore else
         if (s4 !== peg$FAILED) {
           s5 = peg$parse_();
+          // istanbul ignore else
           if (s5 !== peg$FAILED) {
             s6 = peg$parseRecordTypeExprEntry();
+            // istanbul ignore else
             if (s6 !== peg$FAILED) {
               s4 = [s4, s5, s6];
               s3 = s4;
@@ -6732,10 +7451,13 @@ function peg$parse(input, options) {
           s3 = peg$FAILED;
         }
       }
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
         s3 = peg$currPos;
         s4 = peg$parse_();
+        // istanbul ignore else
         if (s4 !== peg$FAILED) {
+          // istanbul ignore else
           if (input.charCodeAt(peg$currPos) === 44) {
             s5 = peg$c115;
             peg$currPos++;
@@ -6744,6 +7466,7 @@ function peg$parse(input, options) {
             s5 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c116); }
           }
+          // istanbul ignore else
           if (s5 !== peg$FAILED) {
             s4 = [s4, s5];
             s3 = s4;
@@ -6757,10 +7480,13 @@ function peg$parse(input, options) {
           peg$currPos = s3;
           s3 = peg$FAILED;
         }
+        // istanbul ignore else
         if (s3 === peg$FAILED) {
           s3 = peg$currPos;
           s4 = peg$parse_();
+          // istanbul ignore else
           if (s4 !== peg$FAILED) {
+            // istanbul ignore else
             if (input.charCodeAt(peg$currPos) === 59) {
               s5 = peg$c159;
               peg$currPos++;
@@ -6769,6 +7495,7 @@ function peg$parse(input, options) {
               s5 = peg$FAILED;
               if (peg$silentFails === 0) { peg$fail(peg$c160); }
             }
+            // istanbul ignore else
             if (s5 !== peg$FAILED) {
               s4 = [s4, s5];
               s3 = s4;
@@ -6782,9 +7509,11 @@ function peg$parse(input, options) {
             peg$currPos = s3;
             s3 = peg$FAILED;
           }
+          // istanbul ignore else
           if (s3 === peg$FAILED) {
             s3 = peg$currPos;
             s4 = [];
+            // istanbul ignore else
             if (peg$c1.test(input.charAt(peg$currPos))) {
               s5 = input.charAt(peg$currPos);
               peg$currPos++;
@@ -6795,6 +7524,7 @@ function peg$parse(input, options) {
             }
             while (s5 !== peg$FAILED) {
               s4.push(s5);
+              // istanbul ignore else
               if (peg$c1.test(input.charAt(peg$currPos))) {
                 s5 = input.charAt(peg$currPos);
                 peg$currPos++;
@@ -6804,7 +7534,9 @@ function peg$parse(input, options) {
                 if (peg$silentFails === 0) { peg$fail(peg$c2); }
               }
             }
+            // istanbul ignore else
             if (s4 !== peg$FAILED) {
+              // istanbul ignore else
               if (peg$c3.test(input.charAt(peg$currPos))) {
                 s5 = input.charAt(peg$currPos);
                 peg$currPos++;
@@ -6813,10 +7545,13 @@ function peg$parse(input, options) {
                 s5 = peg$FAILED;
                 if (peg$silentFails === 0) { peg$fail(peg$c4); }
               }
+              // istanbul ignore else
               if (s5 === peg$FAILED) {
                 s5 = null;
               }
+              // istanbul ignore else
               if (s5 !== peg$FAILED) {
+                // istanbul ignore else
                 if (peg$c5.test(input.charAt(peg$currPos))) {
                   s6 = input.charAt(peg$currPos);
                   peg$currPos++;
@@ -6825,6 +7560,7 @@ function peg$parse(input, options) {
                   s6 = peg$FAILED;
                   if (peg$silentFails === 0) { peg$fail(peg$c6); }
                 }
+                // istanbul ignore else
                 if (s6 !== peg$FAILED) {
                   s4 = [s4, s5, s6];
                   s3 = s4;
@@ -6845,9 +7581,11 @@ function peg$parse(input, options) {
             }
           }
         }
+        // istanbul ignore else
         if (s3 === peg$FAILED) {
           s3 = null;
         }
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           peg$savedPos = s0;
           s1 = peg$c161(s1, s2);
@@ -6878,7 +7616,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 68,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -6887,9 +7625,12 @@ function peg$parse(input, options) {
 
     s0 = peg$currPos;
     s1 = peg$parseRecordTypeExprEntryKey();
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = peg$parse_();
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
+        // istanbul ignore else
         if (input.charCodeAt(peg$currPos) === 63) {
           s3 = peg$c58;
           peg$currPos++;
@@ -6898,12 +7639,16 @@ function peg$parse(input, options) {
           s3 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c59); }
         }
+        // istanbul ignore else
         if (s3 === peg$FAILED) {
           s3 = null;
         }
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           s4 = peg$parse_();
+          // istanbul ignore else
           if (s4 !== peg$FAILED) {
+            // istanbul ignore else
             if (input.charCodeAt(peg$currPos) === 58) {
               s5 = peg$c43;
               peg$currPos++;
@@ -6912,10 +7657,13 @@ function peg$parse(input, options) {
               s5 = peg$FAILED;
               if (peg$silentFails === 0) { peg$fail(peg$c44); }
             }
+            // istanbul ignore else
             if (s5 !== peg$FAILED) {
               s6 = peg$parse_();
+              // istanbul ignore else
               if (s6 !== peg$FAILED) {
                 s7 = peg$parseRecordTypeExprEntryOperand();
+                // istanbul ignore else
                 if (s7 !== peg$FAILED) {
                   peg$savedPos = s0;
                   s1 = peg$c162(s1, s3, s7);
@@ -6955,9 +7703,11 @@ function peg$parse(input, options) {
       peg$currPos = s0;
       s0 = peg$FAILED;
     }
+    // istanbul ignore else
     if (s0 === peg$FAILED) {
       s0 = peg$currPos;
       s1 = peg$parseRecordTypeExprEntryKey();
+      // istanbul ignore else
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
         s1 = peg$c163(s1);
@@ -6975,7 +7725,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 69,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -6983,6 +7733,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$currPos;
+    // istanbul ignore else
     if (input.charCodeAt(peg$currPos) === 34) {
       s1 = peg$c25;
       peg$currPos++;
@@ -6991,9 +7742,11 @@ function peg$parse(input, options) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c26); }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = peg$currPos;
       s3 = [];
+      // istanbul ignore else
       if (peg$c27.test(input.charAt(peg$currPos))) {
         s4 = input.charAt(peg$currPos);
         peg$currPos++;
@@ -7002,8 +7755,10 @@ function peg$parse(input, options) {
         s4 = peg$FAILED;
         if (peg$silentFails === 0) { peg$fail(peg$c28); }
       }
+      // istanbul ignore else
       if (s4 === peg$FAILED) {
         s4 = peg$currPos;
+        // istanbul ignore else
         if (input.charCodeAt(peg$currPos) === 92) {
           s5 = peg$c21;
           peg$currPos++;
@@ -7012,7 +7767,9 @@ function peg$parse(input, options) {
           s5 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c22); }
         }
+        // istanbul ignore else
         if (s5 !== peg$FAILED) {
+          // istanbul ignore else
           if (input.length > peg$currPos) {
             s6 = input.charAt(peg$currPos);
             peg$currPos++;
@@ -7021,6 +7778,7 @@ function peg$parse(input, options) {
             s6 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c23); }
           }
+          // istanbul ignore else
           if (s6 !== peg$FAILED) {
             s5 = [s5, s6];
             s4 = s5;
@@ -7037,6 +7795,7 @@ function peg$parse(input, options) {
       }
       while (s4 !== peg$FAILED) {
         s3.push(s4);
+        // istanbul ignore else
         if (peg$c27.test(input.charAt(peg$currPos))) {
           s4 = input.charAt(peg$currPos);
           peg$currPos++;
@@ -7045,8 +7804,10 @@ function peg$parse(input, options) {
           s4 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c28); }
         }
+        // istanbul ignore else
         if (s4 === peg$FAILED) {
           s4 = peg$currPos;
+          // istanbul ignore else
           if (input.charCodeAt(peg$currPos) === 92) {
             s5 = peg$c21;
             peg$currPos++;
@@ -7055,7 +7816,9 @@ function peg$parse(input, options) {
             s5 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c22); }
           }
+          // istanbul ignore else
           if (s5 !== peg$FAILED) {
+            // istanbul ignore else
             if (input.length > peg$currPos) {
               s6 = input.charAt(peg$currPos);
               peg$currPos++;
@@ -7064,6 +7827,7 @@ function peg$parse(input, options) {
               s6 = peg$FAILED;
               if (peg$silentFails === 0) { peg$fail(peg$c23); }
             }
+            // istanbul ignore else
             if (s6 !== peg$FAILED) {
               s5 = [s5, s6];
               s4 = s5;
@@ -7079,13 +7843,16 @@ function peg$parse(input, options) {
           }
         }
       }
+      // istanbul ignore else
       if (s3 !== peg$FAILED) {
         s2 = input.substring(s2, peg$currPos);
       }
       else {
         s2 = s3;
       }
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
+        // istanbul ignore else
         if (input.charCodeAt(peg$currPos) === 34) {
           s3 = peg$c25;
           peg$currPos++;
@@ -7094,6 +7861,7 @@ function peg$parse(input, options) {
           s3 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c26); }
         }
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           peg$savedPos = s0;
           s1 = peg$c164(s2);
@@ -7113,8 +7881,10 @@ function peg$parse(input, options) {
       peg$currPos = s0;
       s0 = peg$FAILED;
     }
+    // istanbul ignore else
     if (s0 === peg$FAILED) {
       s0 = peg$currPos;
+      // istanbul ignore else
       if (input.charCodeAt(peg$currPos) === 39) {
         s1 = peg$c17;
         peg$currPos++;
@@ -7123,9 +7893,11 @@ function peg$parse(input, options) {
         s1 = peg$FAILED;
         if (peg$silentFails === 0) { peg$fail(peg$c18); }
       }
+      // istanbul ignore else
       if (s1 !== peg$FAILED) {
         s2 = peg$currPos;
         s3 = [];
+        // istanbul ignore else
         if (peg$c19.test(input.charAt(peg$currPos))) {
           s4 = input.charAt(peg$currPos);
           peg$currPos++;
@@ -7134,8 +7906,10 @@ function peg$parse(input, options) {
           s4 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c20); }
         }
+        // istanbul ignore else
         if (s4 === peg$FAILED) {
           s4 = peg$currPos;
+          // istanbul ignore else
           if (input.charCodeAt(peg$currPos) === 92) {
             s5 = peg$c21;
             peg$currPos++;
@@ -7144,7 +7918,9 @@ function peg$parse(input, options) {
             s5 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c22); }
           }
+          // istanbul ignore else
           if (s5 !== peg$FAILED) {
+            // istanbul ignore else
             if (input.length > peg$currPos) {
               s6 = input.charAt(peg$currPos);
               peg$currPos++;
@@ -7153,6 +7929,7 @@ function peg$parse(input, options) {
               s6 = peg$FAILED;
               if (peg$silentFails === 0) { peg$fail(peg$c23); }
             }
+            // istanbul ignore else
             if (s6 !== peg$FAILED) {
               s5 = [s5, s6];
               s4 = s5;
@@ -7169,6 +7946,7 @@ function peg$parse(input, options) {
         }
         while (s4 !== peg$FAILED) {
           s3.push(s4);
+          // istanbul ignore else
           if (peg$c19.test(input.charAt(peg$currPos))) {
             s4 = input.charAt(peg$currPos);
             peg$currPos++;
@@ -7177,8 +7955,10 @@ function peg$parse(input, options) {
             s4 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c20); }
           }
+          // istanbul ignore else
           if (s4 === peg$FAILED) {
             s4 = peg$currPos;
+            // istanbul ignore else
             if (input.charCodeAt(peg$currPos) === 92) {
               s5 = peg$c21;
               peg$currPos++;
@@ -7187,7 +7967,9 @@ function peg$parse(input, options) {
               s5 = peg$FAILED;
               if (peg$silentFails === 0) { peg$fail(peg$c22); }
             }
+            // istanbul ignore else
             if (s5 !== peg$FAILED) {
+              // istanbul ignore else
               if (input.length > peg$currPos) {
                 s6 = input.charAt(peg$currPos);
                 peg$currPos++;
@@ -7196,6 +7978,7 @@ function peg$parse(input, options) {
                 s6 = peg$FAILED;
                 if (peg$silentFails === 0) { peg$fail(peg$c23); }
               }
+              // istanbul ignore else
               if (s6 !== peg$FAILED) {
                 s5 = [s5, s6];
                 s4 = s5;
@@ -7211,13 +7994,16 @@ function peg$parse(input, options) {
             }
           }
         }
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           s2 = input.substring(s2, peg$currPos);
         }
         else {
           s2 = s3;
         }
+        // istanbul ignore else
         if (s2 !== peg$FAILED) {
+          // istanbul ignore else
           if (input.charCodeAt(peg$currPos) === 39) {
             s3 = peg$c17;
             peg$currPos++;
@@ -7226,6 +8012,7 @@ function peg$parse(input, options) {
             s3 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c18); }
           }
+          // istanbul ignore else
           if (s3 !== peg$FAILED) {
             peg$savedPos = s0;
             s1 = peg$c165(s2);
@@ -7245,19 +8032,23 @@ function peg$parse(input, options) {
         peg$currPos = s0;
         s0 = peg$FAILED;
       }
+      // istanbul ignore else
       if (s0 === peg$FAILED) {
         s0 = peg$currPos;
         s1 = peg$currPos;
         s2 = peg$parseJsIdentifier();
+        // istanbul ignore else
         if (s2 === peg$FAILED) {
           s2 = peg$parseUnsignedDecimalNumberLiteralExpr();
         }
+        // istanbul ignore else
         if (s2 !== peg$FAILED) {
           s1 = input.substring(s1, peg$currPos);
         }
         else {
           s1 = s2;
         }
+        // istanbul ignore else
         if (s1 !== peg$FAILED) {
           peg$savedPos = s0;
           s1 = peg$c166(s1);
@@ -7276,7 +8067,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 70,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -7284,28 +8075,40 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$parseUnionTypeExpr();
+    // istanbul ignore else
     if (s0 === peg$FAILED) {
       s0 = peg$parseUnaryUnionTypeExpr();
+      // istanbul ignore else
       if (s0 === peg$FAILED) {
         s0 = peg$parseRecordTypeExpr();
+        // istanbul ignore else
         if (s0 === peg$FAILED) {
           s0 = peg$parseTupleTypeExpr();
+          // istanbul ignore else
           if (s0 === peg$FAILED) {
             s0 = peg$parseArrowTypeExpr();
+            // istanbul ignore else
             if (s0 === peg$FAILED) {
               s0 = peg$parseFunctionTypeExpr();
+              // istanbul ignore else
               if (s0 === peg$FAILED) {
                 s0 = peg$parseParenthesizedExpr();
+                // istanbul ignore else
                 if (s0 === peg$FAILED) {
                   s0 = peg$parseArrayTypeExpr();
+                  // istanbul ignore else
                   if (s0 === peg$FAILED) {
                     s0 = peg$parseGenericTypeExpr();
+                    // istanbul ignore else
                     if (s0 === peg$FAILED) {
                       s0 = peg$parseBroadNamepathExpr();
+                      // istanbul ignore else
                       if (s0 === peg$FAILED) {
                         s0 = peg$parseValueExpr();
+                        // istanbul ignore else
                         if (s0 === peg$FAILED) {
                           s0 = peg$parseAnyTypeExpr();
+                          // istanbul ignore else
                           if (s0 === peg$FAILED) {
                             s0 = peg$parseUnknownTypeExpr();
                           }
@@ -7331,7 +8134,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 71,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -7339,6 +8142,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$currPos;
+    // istanbul ignore else
     if (input.charCodeAt(peg$currPos) === 91) {
       s1 = peg$c126;
       peg$currPos++;
@@ -7347,13 +8151,18 @@ function peg$parse(input, options) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c127); }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = peg$parse_();
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
         s3 = peg$parseTupleTypeExprEntries();
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           s4 = peg$parse_();
+          // istanbul ignore else
           if (s4 !== peg$FAILED) {
+            // istanbul ignore else
             if (input.charCodeAt(peg$currPos) === 93) {
               s5 = peg$c128;
               peg$currPos++;
@@ -7362,6 +8171,7 @@ function peg$parse(input, options) {
               s5 = peg$FAILED;
               if (peg$silentFails === 0) { peg$fail(peg$c129); }
             }
+            // istanbul ignore else
             if (s5 !== peg$FAILED) {
               peg$savedPos = s0;
               s1 = peg$c167(s3);
@@ -7402,7 +8212,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 72,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -7413,9 +8223,12 @@ function peg$parse(input, options) {
     s1 = [];
     s2 = peg$currPos;
     s3 = peg$parseTupleTypeExprOperand();
+    // istanbul ignore else
     if (s3 !== peg$FAILED) {
       s4 = peg$parse_();
+      // istanbul ignore else
       if (s4 !== peg$FAILED) {
+        // istanbul ignore else
         if (input.charCodeAt(peg$currPos) === 44) {
           s5 = peg$c115;
           peg$currPos++;
@@ -7424,8 +8237,10 @@ function peg$parse(input, options) {
           s5 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c116); }
         }
+        // istanbul ignore else
         if (s5 !== peg$FAILED) {
           s6 = peg$parse_();
+          // istanbul ignore else
           if (s6 !== peg$FAILED) {
             s3 = [s3, s4, s5, s6];
             s2 = s3;
@@ -7453,9 +8268,12 @@ function peg$parse(input, options) {
       s1.push(s2);
       s2 = peg$currPos;
       s3 = peg$parseTupleTypeExprOperand();
+      // istanbul ignore else
       if (s3 !== peg$FAILED) {
         s4 = peg$parse_();
+        // istanbul ignore else
         if (s4 !== peg$FAILED) {
+          // istanbul ignore else
           if (input.charCodeAt(peg$currPos) === 44) {
             s5 = peg$c115;
             peg$currPos++;
@@ -7464,8 +8282,10 @@ function peg$parse(input, options) {
             s5 = peg$FAILED;
             if (peg$silentFails === 0) { peg$fail(peg$c116); }
           }
+          // istanbul ignore else
           if (s5 !== peg$FAILED) {
             s6 = peg$parse_();
+            // istanbul ignore else
             if (s6 !== peg$FAILED) {
               s3 = [s3, s4, s5, s6];
               s2 = s3;
@@ -7490,14 +8310,18 @@ function peg$parse(input, options) {
         s2 = peg$FAILED;
       }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = peg$parseVariadicTypeExpr();
+      // istanbul ignore else
       if (s2 === peg$FAILED) {
         s2 = peg$parseVariadicTypeExprOperand();
       }
+      // istanbul ignore else
       if (s2 === peg$FAILED) {
         s2 = null;
       }
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
         peg$savedPos = s0;
         s1 = peg$c168(s1, s2);
@@ -7523,7 +8347,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 73,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -7531,32 +8355,46 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$parseUnionTypeExpr();
+    // istanbul ignore else
     if (s0 === peg$FAILED) {
       s0 = peg$parseUnaryUnionTypeExpr();
+      // istanbul ignore else
       if (s0 === peg$FAILED) {
         s0 = peg$parseRecordTypeExpr();
+        // istanbul ignore else
         if (s0 === peg$FAILED) {
           s0 = peg$parseTupleTypeExpr();
+          // istanbul ignore else
           if (s0 === peg$FAILED) {
             s0 = peg$parseArrowTypeExpr();
+            // istanbul ignore else
             if (s0 === peg$FAILED) {
               s0 = peg$parseFunctionTypeExpr();
+              // istanbul ignore else
               if (s0 === peg$FAILED) {
                 s0 = peg$parseParenthesizedExpr();
+                // istanbul ignore else
                 if (s0 === peg$FAILED) {
                   s0 = peg$parseTypeQueryExpr();
+                  // istanbul ignore else
                   if (s0 === peg$FAILED) {
                     s0 = peg$parseKeyQueryExpr();
+                    // istanbul ignore else
                     if (s0 === peg$FAILED) {
                       s0 = peg$parseArrayTypeExpr();
+                      // istanbul ignore else
                       if (s0 === peg$FAILED) {
                         s0 = peg$parseGenericTypeExpr();
+                        // istanbul ignore else
                         if (s0 === peg$FAILED) {
                           s0 = peg$parseBroadNamepathExpr();
+                          // istanbul ignore else
                           if (s0 === peg$FAILED) {
                             s0 = peg$parseValueExpr();
+                            // istanbul ignore else
                             if (s0 === peg$FAILED) {
                               s0 = peg$parseAnyTypeExpr();
+                              // istanbul ignore else
                               if (s0 === peg$FAILED) {
                                 s0 = peg$parseUnknownTypeExpr();
                               }
@@ -7584,7 +8422,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 74,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -7592,6 +8430,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$currPos;
+    // istanbul ignore else
     if (input.charCodeAt(peg$currPos) === 40) {
       s1 = peg$c99;
       peg$currPos++;
@@ -7600,13 +8439,18 @@ function peg$parse(input, options) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c100); }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = peg$parse_();
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
         s3 = peg$parseParenthesizedExprOperand();
+        // istanbul ignore else
         if (s3 !== peg$FAILED) {
           s4 = peg$parse_();
+          // istanbul ignore else
           if (s4 !== peg$FAILED) {
+            // istanbul ignore else
             if (input.charCodeAt(peg$currPos) === 41) {
               s5 = peg$c101;
               peg$currPos++;
@@ -7615,6 +8459,7 @@ function peg$parse(input, options) {
               s5 = peg$FAILED;
               if (peg$silentFails === 0) { peg$fail(peg$c102); }
             }
+            // istanbul ignore else
             if (s5 !== peg$FAILED) {
               peg$savedPos = s0;
               s1 = peg$c169(s3);
@@ -7655,7 +8500,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 75,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -7663,30 +8508,43 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$parseUnionTypeExpr();
+    // istanbul ignore else
     if (s0 === peg$FAILED) {
       s0 = peg$parseUnaryUnionTypeExpr();
+      // istanbul ignore else
       if (s0 === peg$FAILED) {
         s0 = peg$parseRecordTypeExpr();
+        // istanbul ignore else
         if (s0 === peg$FAILED) {
           s0 = peg$parseTupleTypeExpr();
+          // istanbul ignore else
           if (s0 === peg$FAILED) {
             s0 = peg$parseArrowTypeExpr();
+            // istanbul ignore else
             if (s0 === peg$FAILED) {
               s0 = peg$parseFunctionTypeExpr();
+              // istanbul ignore else
               if (s0 === peg$FAILED) {
                 s0 = peg$parseArrayTypeExpr();
+                // istanbul ignore else
                 if (s0 === peg$FAILED) {
                   s0 = peg$parseTypeQueryExpr();
+                  // istanbul ignore else
                   if (s0 === peg$FAILED) {
                     s0 = peg$parseKeyQueryExpr();
+                    // istanbul ignore else
                     if (s0 === peg$FAILED) {
                       s0 = peg$parseGenericTypeExpr();
+                      // istanbul ignore else
                       if (s0 === peg$FAILED) {
                         s0 = peg$parseBroadNamepathExpr();
+                        // istanbul ignore else
                         if (s0 === peg$FAILED) {
                           s0 = peg$parseValueExpr();
+                          // istanbul ignore else
                           if (s0 === peg$FAILED) {
                             s0 = peg$parseAnyTypeExpr();
+                            // istanbul ignore else
                             if (s0 === peg$FAILED) {
                               s0 = peg$parseUnknownTypeExpr();
                             }
@@ -7713,7 +8571,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 76,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -7721,8 +8579,10 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$parsePrefixVariadicTypeExpr();
+    // istanbul ignore else
     if (s0 === peg$FAILED) {
       s0 = peg$parseSuffixVariadicTypeExpr();
+      // istanbul ignore else
       if (s0 === peg$FAILED) {
         s0 = peg$parseAnyVariadicTypeExpr();
       }
@@ -7738,7 +8598,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 77,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -7746,6 +8606,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$currPos;
+    // istanbul ignore else
     if (input.substr(peg$currPos, 3) === peg$c139) {
       s1 = peg$c139;
       peg$currPos += 3;
@@ -7754,8 +8615,10 @@ function peg$parse(input, options) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c140); }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       s2 = peg$parseVariadicTypeExprOperand();
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
         peg$savedPos = s0;
         s1 = peg$c170(s2);
@@ -7781,7 +8644,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 78,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -7790,7 +8653,9 @@ function peg$parse(input, options) {
 
     s0 = peg$currPos;
     s1 = peg$parseVariadicTypeExprOperand();
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
+      // istanbul ignore else
       if (input.substr(peg$currPos, 3) === peg$c139) {
         s2 = peg$c139;
         peg$currPos += 3;
@@ -7799,6 +8664,7 @@ function peg$parse(input, options) {
         s2 = peg$FAILED;
         if (peg$silentFails === 0) { peg$fail(peg$c140); }
       }
+      // istanbul ignore else
       if (s2 !== peg$FAILED) {
         peg$savedPos = s0;
         s1 = peg$c171(s1);
@@ -7824,7 +8690,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 79,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -7832,6 +8698,7 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$currPos;
+    // istanbul ignore else
     if (input.substr(peg$currPos, 3) === peg$c139) {
       s1 = peg$c139;
       peg$currPos += 3;
@@ -7840,6 +8707,7 @@ function peg$parse(input, options) {
       s1 = peg$FAILED;
       if (peg$silentFails === 0) { peg$fail(peg$c140); }
     }
+    // istanbul ignore else
     if (s1 !== peg$FAILED) {
       peg$savedPos = s0;
       s1 = peg$c172();
@@ -7856,7 +8724,7 @@ function peg$parse(input, options) {
 
     var key    = peg$currPos * 81 + 80,
         cached = peg$resultsCache[key];
-
+    // istanbul ignore next
     if (cached) {
       peg$currPos = cached.nextPos;
 
@@ -7864,32 +8732,46 @@ function peg$parse(input, options) {
     }
 
     s0 = peg$parseUnionTypeExpr();
+    // istanbul ignore else
     if (s0 === peg$FAILED) {
       s0 = peg$parseUnaryUnionTypeExpr();
+      // istanbul ignore else
       if (s0 === peg$FAILED) {
         s0 = peg$parseRecordTypeExpr();
+        // istanbul ignore else
         if (s0 === peg$FAILED) {
           s0 = peg$parseTupleTypeExpr();
+          // istanbul ignore else
           if (s0 === peg$FAILED) {
             s0 = peg$parseArrowTypeExpr();
+            // istanbul ignore else
             if (s0 === peg$FAILED) {
               s0 = peg$parseFunctionTypeExpr();
+              // istanbul ignore else
               if (s0 === peg$FAILED) {
                 s0 = peg$parseParenthesizedExpr();
+                // istanbul ignore else
                 if (s0 === peg$FAILED) {
                   s0 = peg$parseTypeQueryExpr();
+                  // istanbul ignore else
                   if (s0 === peg$FAILED) {
                     s0 = peg$parseKeyQueryExpr();
+                    // istanbul ignore else
                     if (s0 === peg$FAILED) {
                       s0 = peg$parseArrayTypeExpr();
+                      // istanbul ignore else
                       if (s0 === peg$FAILED) {
                         s0 = peg$parseGenericTypeExpr();
+                        // istanbul ignore else
                         if (s0 === peg$FAILED) {
                           s0 = peg$parseBroadNamepathExpr();
+                          // istanbul ignore else
                           if (s0 === peg$FAILED) {
                             s0 = peg$parseValueExpr();
+                            // istanbul ignore else
                             if (s0 === peg$FAILED) {
                               s0 = peg$parseAnyTypeExpr();
+                              // istanbul ignore else
                               if (s0 === peg$FAILED) {
                                 s0 = peg$parseUnknownTypeExpr();
                               }
